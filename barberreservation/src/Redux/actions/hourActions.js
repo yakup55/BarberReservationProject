@@ -7,7 +7,7 @@ export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
 const service = new HourService();
 
-export function getList() {
+export function getList4() {
   return function (dispacth) {
     service
       .getHoursList()

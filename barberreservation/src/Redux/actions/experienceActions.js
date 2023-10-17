@@ -7,7 +7,7 @@ export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
 const service = new ExperienceService();
 
-export function getList() {
+export function getList3() {
   return function (dispacth) {
     service
       .getExperincesList()

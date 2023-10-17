@@ -7,7 +7,7 @@ export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
 const service = new UserService();
 
-export function getList() {
+export function getList6() {
   return function (dispacth) {
     service
       .getUsersList()

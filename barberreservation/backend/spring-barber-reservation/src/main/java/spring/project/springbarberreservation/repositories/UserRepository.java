@@ -6,4 +6,5 @@ import spring.project.springbarberreservation.entities.Users;
 
 public interface UserRepository extends JpaRepository<Users, Long>{
 
+	Users findByName(String name);
 }

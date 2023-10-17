@@ -7,7 +7,7 @@ export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
 const service = new BarberService();
 
-export function getList() {
+export function getList2() {
   return function (dispacth) {
     service
       .getBarbersList()

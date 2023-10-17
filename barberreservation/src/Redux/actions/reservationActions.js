@@ -7,7 +7,7 @@ export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
 const service = new ReservationService();
 
-export function getList() {
+export function getList5() {
   return function (dispacth) {
     service
       .getReservationsList()

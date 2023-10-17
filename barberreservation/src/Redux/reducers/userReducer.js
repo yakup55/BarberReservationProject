@@ -1,4 +1,4 @@
-import { user, abouts as users } from "../initials/userInitials";
+import { user, users } from "../initials/userInitials";
 import {
   GET_LIST,
   GET_BY_ID,
