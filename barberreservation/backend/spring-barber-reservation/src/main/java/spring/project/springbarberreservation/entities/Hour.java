@@ -15,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import spring.project.springbarberreservation.requests.UpdateHourRequest;
 
 @Getter
 @NoArgsConstructor
@@ -33,10 +34,9 @@ private Barber barber;
 private List<Reservation>reservations;
 
 
-public void update(Hour hour) {
+public void update(UpdateHourRequest hour) {
 	this.hour=hour.getHour();
 	this.status=hour.getStatus();
-	this.barber=hour.barber;
 }
 
 

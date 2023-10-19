@@ -25,6 +25,7 @@ private final AboutRepository repository;
 	}
 	
 	public MessageResponse addAbout(About newAbout) {
+		
 		repository.save(newAbout);
 		return new MessageResponse("Has been created", MessageType.SUCCESS);
 	}

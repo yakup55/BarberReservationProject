@@ -1,56 +1,62 @@
 import {
+  Button,
   Container,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleted, getList6 } from "../../Redux/actions/userActions";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 export default function List6() {
+  const dispacth = useDispatch();
+  const { users } = useSelector((state) => state.user);
+  const handleDeleted = (id) => {
+    dispacth(deleted(id));
+  };
+  useEffect(() => {
+    dispacth(getList6());
+  }, [dispacth]);
   return (
     <Container maxW={1000}>
       <TableContainer>
         <Table variant="simple">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
           <Thead>
             <Tr>
               <Th>#</Th>
-              <Th>NAME</Th>
-              <Th>SURNAME</Th>
-              <Th>PHONE NUMBER</Th>
-              <Th>CREATED DATE</Th>
+              <Th>KULLANICI İSMİ</Th>
+              <Th>KULLANICI SOY İSMİ</Th>
+              <Th>KULLANICI TELEFON NUMARASI</Th>
+              <Th>KAYIT TARİHİ</Th>
+              <Th>SİL</Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-            </Tr>
-            <Tr>
-              <Td>feet</Td>
-              <Td>centimetres (cm)</Td>
-              <Td isNumeric>30.48</Td>
-            </Tr>
-            <Tr>
-              <Td>yards</Td>
-              <Td>metres (m)</Td>
-              <Td isNumeric>0.91444</Td>
-            </Tr>
+            {users.map((user) => (
+              <Tr>
+                <Td>{user.id}</Td>
+                <Td>{user.name}</Td>
+                <Td>{user.surName}</Td>
+                <Td>{user.phoneNumber}</Td>
+                <Td>{user.date}</Td>
+                <Td>
+                  <Button
+                    onClick={() => handleDeleted(user.id)}
+                    colorScheme="red"
+                    leftIcon={<DeleteIcon></DeleteIcon>}
+                  >
+                    SİL
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
-            </Tr>
-          </Tfoot>
         </Table>
       </TableContainer>
     </Container>

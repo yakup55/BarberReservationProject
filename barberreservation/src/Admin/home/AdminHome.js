@@ -19,19 +19,22 @@ import { useNavigate } from "react-router-dom";
 import { getList } from "../../Redux/actions/aboutActions";
 import { getList2 } from "../../Redux/actions/barberActions";
 import { getList4 } from "../../Redux/actions/hourActions";
-import { getList3 } from "../../Redux/actions/experienceActions";
 import { getList5 } from "../../Redux/actions/reservationActions";
 import { getList6 } from "../../Redux/actions/userActions";
-
+import { getList3 } from "../../Redux/actions/calendarActions";
+import { getList7 } from "../../Redux/actions/contactActions";
+import { getList8 } from "../../Redux/actions/quentionsActions";
 export default function AdminHome() {
   const navigate = useNavigate();
   const dispacth = useDispatch();
   const { barbers } = useSelector((state) => state.barber);
   const { hours } = useSelector((state) => state.hour);
-  const { experiences } = useSelector((state) => state.experience);
   const { users } = useSelector((state) => state.user);
   const { reservations } = useSelector((state) => state.reservation);
   const { abouts } = useSelector((state) => state.about);
+  const { calendars } = useSelector((state) => state.calendar);
+  const { contacts } = useSelector((state) => state.contact);
+  const { quentions } = useSelector((state) => state.quention);
 
   useEffect(() => {
     dispacth(getList());
@@ -40,9 +43,11 @@ export default function AdminHome() {
     dispacth(getList4());
     dispacth(getList5());
     dispacth(getList6());
-  }, []);
+    dispacth(getList7());
+    dispacth(getList8());
+  }, [dispacth]);
   return (
-    <Container mt="50" maxW={1000}>
+    <Container mt="50" mb={20} maxW={1000}>
       <SimpleGrid columns={3} spacing={10}>
         <Card bgColor="aqua">
           <CardHeader>
@@ -54,7 +59,7 @@ export default function AdminHome() {
             </Text>
           </CardBody>
           <CardFooter>
-            <Button  onClick={() => navigate("/admin/barberslist")}>
+            <Button onClick={() => navigate("/admin/barberslist")}>
               Detay
             </Button>
           </CardFooter>
@@ -85,21 +90,7 @@ export default function AdminHome() {
             <Button onClick={() => navigate("/admin/userslist")}>Detay</Button>
           </CardFooter>
         </Card>
-        <Card bgColor="aqua">
-          <CardHeader>
-            <Heading size="md"> Deneyim</Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>
-              Toplam Deneyim sayısı <Badge>{experiences.length}</Badge>
-            </Text>
-          </CardBody>
-          <CardFooter>
-            <Button onClick={() => navigate("/admin/experienceslist")}>
-              Detay
-            </Button>
-          </CardFooter>
-        </Card>
+
         <Card bgColor="aqua">
           <CardHeader>
             <Heading size="md"> Hakkında</Heading>
@@ -123,7 +114,52 @@ export default function AdminHome() {
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/barberslist")}>
+            <Button onClick={() => navigate("/admin/reservationslist")}>
+              Detay
+            </Button>
+          </CardFooter>
+        </Card>
+        <Card bgColor="aqua">
+          <CardHeader>
+            <Heading size="md"> Günler</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              Toplam Gün sayısı <Badge>{calendars.length}</Badge>
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <Button onClick={() => navigate("/admin/calendarslist")}>
+              Detay
+            </Button>
+          </CardFooter>
+        </Card>
+        <Card bgColor="aqua">
+          <CardHeader>
+            <Heading size="md"> İletişim</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              Toplam İletişim sayısı <Badge>{contacts.length}</Badge>
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <Button onClick={() => navigate("/admin/contactslist")}>
+              Detay
+            </Button>
+          </CardFooter>
+        </Card>
+        <Card bgColor="aqua">
+          <CardHeader>
+            <Heading size="md">Sıkça Sorulan Sorular</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              Toplam Soru sayısı <Badge>{quentions.length}</Badge>
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <Button onClick={() => navigate("/admin/quentionslist")}>
               Detay
             </Button>
           </CardFooter>

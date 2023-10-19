@@ -35,11 +35,11 @@ public ReservationResponse getReservationById(@PathVariable Long id) {
 }
 @PostMapping("/{addReservation}")
 public MessageResponse addReservatiom(@RequestBody @Valid AddReservationRequest addReservationRequest) {
-	return reservationService.addReservation(addReservationRequest.toEntity());
+	return reservationService.addReservation(addReservationRequest);
 }
 @PutMapping("/{id}")
 public MessageResponse updateReservatiom(@PathVariable Long id, @RequestBody @Valid UpdateReservationRequest updateReservationRequest) {
-	return reservationService.updateReservation(id, updateReservationRequest.toEntity());
+	return reservationService.updateReservation(id, updateReservationRequest);
 }
 @DeleteMapping("/{id}")
 public MessageResponse deleteReservation(@PathVariable Long id) {

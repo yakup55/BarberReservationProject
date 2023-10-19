@@ -1,69 +1,91 @@
 import { EditIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
-import React from "react";
-
+import { Button, Container, Input, Stack } from "@chakra-ui/react";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { getById, update } from "../../Redux/actions/barberActions";
+import { validationSchema } from "./validationSchema";
 export default function Update2() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
+  const navigate = useNavigate();
+  const dispacth = useDispatch();
+  const { id } = useParams();
+  const { barber } = useSelector((state) => state.barber);
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    errors,
+    touched,
+    values,
+    setValues,
+  } = useFormik({
+    initialValues: {
+      id: id,
+      name: "",
+      image: "",
+      description: "",
+    },
+    onSubmit: (values) => {
+      dispacth(update(values));
+      navigate("/admin/aboutslist");
+    },
+    validationSchema,
+  });
+  useEffect(() => {
+    dispacth(getById(id));
+  }, []);
   return (
-    <>
-      <Button leftIcon={<EditIcon></EditIcon>} colorScheme="whatsapp" onClick={onOpen}>
-        UPDATE
-      </Button>
+    <Container mt={20}>
+      <from onSubmit={handleSubmit}>
+        <Stack spacing={3}>
+          <Input
+            variant="outline"
+            id="name"
+            name="name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values?.name}
+            error={errors?.name && touched?.name}
+            helperText={errors?.name && touched?.name ? errors?.name : ""}
+          />
+          <Input
+            variant="outline"
+            id="surName"
+            name="surName"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values?.surName}
+            error={errors?.surName && touched?.surName}
+            helperText={
+              errors?.surName && touched?.surName ? errors?.surName : ""
+            }
+          />
+          <Input
+            variant="outline"
+            id="phoneNumber"
+            name="phoneNumber"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.phoneNumber}
+            error={errors?.phoneNumber && touched?.phoneNumber}
+            helperText={
+              errors?.phoneNumber && touched?.phoneNumber
+                ? errors?.phoneNumber
+                : ""
+            }
+          />
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Berber Ekle</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Adınız</FormLabel>
-              <Input ref={initialRef} placeholder="First name" />
-            </FormControl>
-
-            <FormControl mt={4}>
-              <FormLabel>Soy Adınız</FormLabel>
-              <Input placeholder="Last name" />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Telefon Numaranız</FormLabel>
-              <Input placeholder="Last name" />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Deneyim</FormLabel>
-              <Input placeholder="Last name" />
-            </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+          <Button
+            type="save"
+            onClick={() => navigate("/admin/aboutslist")}
+            colorScheme="whatsapp"
+            leftIcon={<EditIcon></EditIcon>}
+          >
+            UPDATE
+          </Button>
+        </Stack>
+      </from>
+    </Container>
   );
 }

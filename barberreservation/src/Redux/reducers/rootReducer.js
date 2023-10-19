@@ -1,9 +1,11 @@
 import aboutReducer from "./aboutReducer";
 import barberReducer from "./barberReducer";
 import hourReducer from "./hourReducer";
-import experienceReducer from "./experienceReducer";
 import reservationReducer from "./reservationReducer";
 import userReducer from "./userReducer";
+import calendarReducer from "./calendarReducer";
+import quentionReducer from "./quentionsReducer";
+import contactReducer from "./contactReducer";
 const { combineReducers } = require("redux");
 
 const rootReducer = combineReducers({
@@ -11,7 +13,9 @@ const rootReducer = combineReducers({
   about: aboutReducer,
   user: userReducer,
   hour: hourReducer,
-  experience: experienceReducer,
   reservation: reservationReducer,
+  calendar: calendarReducer,
+  contact: contactReducer,
+  quention: quentionReducer,
 });
 export default rootReducer;

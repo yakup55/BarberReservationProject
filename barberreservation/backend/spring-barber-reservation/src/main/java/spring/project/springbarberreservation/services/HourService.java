@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import spring.project.springbarberreservation.entities.Barber;
 import spring.project.springbarberreservation.entities.Hour;
 import spring.project.springbarberreservation.repositories.HourRepository;
+import spring.project.springbarberreservation.requests.AddHourRequest;
+import spring.project.springbarberreservation.requests.UpdateHourRequest;
 import spring.project.springbarberreservation.responses.MessageResponse;
 import spring.project.springbarberreservation.responses.MessageType;
 
@@ -29,8 +31,8 @@ public Hour getHourById(Long id) {
 	return repository.findById(id).orElseThrow(()->new EntityNotFoundException("Id Not Found".formatted(id)));
 }
 
-public MessageResponse addHour(Hour hour) {
-	Barber barber=barberService.getBarberById(hour.getBarber().getId());
+public MessageResponse addHour(AddHourRequest hour) {
+	Barber barber=barberService.getBarberById(hour.getBarberId());
 	Hour newHour=new Hour();
 	newHour.setHour(hour.getHour());
 	newHour.setStatus(hour.getStatus());
@@ -39,7 +41,7 @@ public MessageResponse addHour(Hour hour) {
 	return new MessageResponse("Has been created",MessageType.SUCCESS);
 }
 @Transactional
-public MessageResponse updateHour(Long id,Hour hour) {
+public MessageResponse updateHour(Long id,UpdateHourRequest hour) {
 	Hour newHour=getHourById(id);
 newHour.update(hour);
 	repository.save(newHour);

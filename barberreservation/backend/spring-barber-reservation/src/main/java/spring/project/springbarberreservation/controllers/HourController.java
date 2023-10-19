@@ -35,12 +35,12 @@ public HourResponse getHourById(@PathVariable Long id) {
 }
 @PostMapping("/{addUser}")
 public MessageResponse addHour(@RequestBody @Valid AddHourRequest addHourRequest  ) {
-	return service.addHour(addHourRequest.toEntity());
+	return service.addHour(addHourRequest);
 }
 
 @PutMapping("/{id}")
 public MessageResponse updateHour(@PathVariable Long id,@RequestBody @Valid UpdateHourRequest updateHourRequest) {
-	return service.updateHour(id, updateHourRequest.toEntity());
+	return service.updateHour(id, updateHourRequest);
 }
 @DeleteMapping("/{id}")
 public MessageResponse deleteHour(@PathVariable Long id) {

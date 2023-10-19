@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import spring.project.springbarberreservation.requests.UpdateReservationRequest;
 @Entity
 @NoArgsConstructor
 @Getter
@@ -30,18 +31,23 @@ public class Reservation extends BaseEntity{
 	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Hour hour;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="calendar_id")
+	@JsonIgnore
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	private Calendar calendar;
+	
 	private String description;
 
-	public Reservation(Barber barber, Hour hour, String description) {
+	public Reservation(Barber barber, Hour hour,Calendar calendar, String description) {
 		super();
 		this.barber = barber;
 		this.hour = hour;
+		this.calendar=calendar;
 		this.description = description;
 	}
 	
-	public void update(Reservation newReservation) {
-		this.barber=newReservation.barber;
-		this.hour=newReservation.hour;
-		this.description=newReservation.description;
+	public void update(UpdateReservationRequest newReservation) {
+		this.description=newReservation.getDescription();
 	}
 }

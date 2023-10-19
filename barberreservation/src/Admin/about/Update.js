@@ -32,18 +32,7 @@ export default function Update() {
     },
     validationSchema,
   });
-  useEffect(() => {
-    dispacth(getById(id));
-    setValues(
-      {
-        id: id,
-        name: about?.name,
-        image: about?.image,
-        description: about?.description,
-      },
-      [id, about?.name, about?.image, about?.description, setValues,dispacth]
-    );
-  });
+
   return (
     <Container mt={20}>
       <from onSubmit={handleSubmit}>
@@ -54,9 +43,9 @@ export default function Update() {
             name="name"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.name}
-            error={errors.name && touched.name}
-            helperText={errors.name && touched.name ? errors.name : ""}
+            value={values?.name}
+            error={errors?.name && touched?.name}
+            helperText={errors?.name && touched?.name ? errors?.name : ""}
           />
           <Input
             variant="outline"
@@ -64,9 +53,9 @@ export default function Update() {
             name="image"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.image}
-            error={errors.image && touched.image}
-            helperText={errors.image && touched.image ? errors.image : ""}
+            value={values?.image}
+            error={errors?.image && touched?.image}
+            helperText={errors?.image && touched?.image ? errors?.image : ""}
           />
           <Input
             variant="outline"
@@ -75,10 +64,10 @@ export default function Update() {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.description}
-            error={errors.description && touched.description}
+            error={errors?.description && touched?.description}
             helperText={
-              errors.description && touched.description
-                ? errors.description
+              errors?.description && touched?.description
+                ? errors?.description
                 : ""
             }
           />

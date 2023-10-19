@@ -1,6 +1,7 @@
 import { Box, Button, ButtonGroup, Flex, Heading, Spacer } from '@chakra-ui/react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import SignUp from '../SignUp/SignUp';
 
 function Navbar() {
   const navigate=useNavigate();
@@ -12,7 +13,7 @@ function Navbar() {
   </Box>
   <Spacer />
   <ButtonGroup gap='2'>
-    <Button colorScheme='teal' onClick={()=>navigate("/signup")} >Kayıt Ol</Button>
+    <Button colorScheme='teal' ><SignUp></SignUp></Button>
     <Button colorScheme='teal' onClick={()=>navigate("/login")} >Giriş Yap</Button>
   </ButtonGroup>
 </Flex>

@@ -2,16 +2,14 @@ package spring.project.springbarberreservation.requests;
 
 
 import jakarta.validation.constraints.NotEmpty;
-import spring.project.springbarberreservation.entities.Barber;
-import spring.project.springbarberreservation.entities.Hour;
+import lombok.Data;
 
-public record AddHourRequest(
-		@NotEmpty
-		String hour,
-		Boolean status,
-		Barber barber
-		) {
-public Hour toEntity() {
-	return new Hour(hour,status,barber);
-}
+@Data
+public class AddHourRequest
+		{
+			@NotEmpty
+			String hour;
+			Boolean status;
+			Long  barberId;
+			
 }

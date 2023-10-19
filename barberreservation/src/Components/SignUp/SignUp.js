@@ -1,33 +1,129 @@
-import { PhoneIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, Input, InputGroup, InputLeftElement, SimpleGrid, Stack } from '@chakra-ui/react'
-import React from 'react'
+import { AddIcon } from "@chakra-ui/icons";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Select,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { add } from "../../Redux/actions/userActions";
+import { validationSchema } from "../../Admin/user/validationSchema";
 
- function SignUp() {
+export default function SignUp() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const navigate = useNavigate();
+  const dispacth = useDispatch();
+  const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
+    useFormik({
+      initialValues: {
+        name: "",
+        surName: "",
+        phoneNumber: "",
+      },
+      onSubmit: (values) => {
+        dispacth(add(values));
+        //navigate("/admin/barberslist");
+        onClose={onClose}
+      },
+      validationSchema,
+    });
+  useEffect(() => {
+   
+  }, [dispacth]);
   return (
-    <Container>
-      <SimpleGrid columns={1} spacingX='40px' spacingY='20px'>
-  <Box  height='60px'>
-  <Input  placeholder='Adınız' />
-  </Box>
-  <Box  height='60px'>
-  <Input  placeholder='Soyadınız' />
-  </Box>
-  <Box  height='60px'>
-  <Stack spacing={4}>
-  <InputGroup>
-    <InputLeftElement pointerEvents='none'>
-      <PhoneIcon color='gray.300' />
-    </InputLeftElement>
-    <Input  type='tel' placeholder='Telefon Numaranız' />
-  </InputGroup>
-</Stack>
-  </Box>
-  <Box  height='80px'>
-    <Button>Kayıt Ol</Button>
-  </Box>
-  <Box bg='tomato' height='80px'></Box>
-</SimpleGrid>
-    </Container>
-  )
+    <>
+      <Button
+        colorScheme="teal"
+        onClick={onOpen}
+      >
+        Kayıt Ol
+      </Button>
+
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <form onSubmit={handleSubmit}>
+          <ModalContent>
+            <ModalHeader>Kayıt Ol </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>Adınız</FormLabel>
+                <Input
+                  id="name"
+                  name="name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.name && touched.name}
+                  helperText={errors.name && touched.name ? errors.name : ""}
+                  ref={initialRef}
+                  placeholder="Adınızı Giriniz"
+                />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Soy Adınız</FormLabel>
+                <Input
+                  id="surName"
+                  name="surName"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.surName && touched.surName}
+                  helperText={
+                    errors.surName && touched.surName ? errors.surName : ""
+                  }
+                  ref={initialRef}
+                  placeholder="Soy Adınız Giriniz"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Telefon Numaranız</FormLabel>
+                <Input 
+                
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.phoneNumber && touched.phoneNumber}
+                  helperText={
+                    errors.phoneNumber && touched.phoneNumber
+                      ? errors.phoneNumber
+                      : ""
+                  }
+                  ref={initialRef}
+                  placeholder="Telefon Numaranızı Giriniz"
+                />
+              </FormControl>
+       
+            </ModalBody>
+
+            <ModalFooter>
+              <Button type="submit" colorScheme="blue" mr={3}>
+                Kayıt Ol
+              </Button>
+              <Button onClick={onClose}>İptal</Button>
+            </ModalFooter>
+          </ModalContent>
+        </form>
+      </Modal>
+    </>
+  );
 }
-export default SignUp

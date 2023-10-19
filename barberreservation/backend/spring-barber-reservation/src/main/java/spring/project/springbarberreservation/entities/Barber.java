@@ -1,16 +1,7 @@
 package spring.project.springbarberreservation.entities;
 
 import java.util.List;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,12 +15,8 @@ public class Barber extends BaseEntity {
 private String name;
 private String surName;
 private String phoneNumber;
-
-@ManyToOne(fetch=FetchType.LAZY)
-@JoinColumn(name="exprience_id")
-@JsonIgnore
-@OnDelete(action=OnDeleteAction.CASCADE)
-private Experience expriences;
+private String image;
+private String expriences;
 
 @OneToMany(mappedBy = "barber")
 private List<Reservation>reservations;
@@ -37,15 +24,22 @@ private List<Reservation>reservations;
 public void update(Barber newBarber) {
 	this.name=newBarber.getName();
 	this.surName=newBarber.getSurName();
+	this.expriences=newBarber.getExpriences();
+	this.image=newBarber.getImage();
 }
 
-public Barber(String name, String surName, String phoneNumber, Experience expriences) {
+public Barber(String name, String surName, String phoneNumber, String image, String expriences,
+		List<Reservation> reservations) {
 	super();
 	this.name = name;
 	this.surName = surName;
 	this.phoneNumber = phoneNumber;
+	this.image = image;
 	this.expriences = expriences;
+	this.reservations = reservations;
 }
+
+
 
 
 

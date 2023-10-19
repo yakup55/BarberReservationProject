@@ -8,7 +8,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import spring.project.springbarberreservation.entities.Barber;
-import spring.project.springbarberreservation.entities.Experience;
 import spring.project.springbarberreservation.repositories.BarberRepository;
 import spring.project.springbarberreservation.responses.MessageResponse;
 import spring.project.springbarberreservation.responses.MessageType;
@@ -18,7 +17,6 @@ import spring.project.springbarberreservation.responses.MessageType;
 public class BarberService {
 
 	private final BarberRepository repository;
-	private final ExperienceService experienceService;
 	
 	
 	public List<Barber> getAllBarber(){
@@ -30,19 +28,9 @@ public class BarberService {
 		
 	}
 	public MessageResponse addBarber(Barber barber) {
-	    //if (barber.getExpriences() != null) {
-	        Experience experience = experienceService.getExperienceById(barber.getExpriences().getId());
-	        Barber newBarber = new Barber();
-	        newBarber.setName(barber.getName());
-	        newBarber.setSurName(barber.getSurName());
-	        newBarber.setPhoneNumber(barber.getPhoneNumber());
-	        newBarber.setExpriences(experience);
-	        repository.save(newBarber);
+	        repository.save(barber);
 	        return new MessageResponse("Başarıyla oluşturuldu", MessageType.SUCCESS);
-	  //  }
-	    //else {
-	      //  return new MessageResponse("Hata: Deneyim bilgisi eksik", MessageType.ERROR);
-	    //}
+	  
 	}
 
 	@Transactional
