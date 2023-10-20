@@ -1,10 +1,10 @@
 import { barber, barbers } from "../initials/barberInitials";
 import {
-  GET_LIST,
   GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
+  GET_LIST_BARBER,
 } from "../actions/barberActions";
 
 const initialvales = {
@@ -13,7 +13,7 @@ const initialvales = {
 };
 export default function barberReducer(state = initialvales, { type, payload }) {
   switch (type) {
-    case GET_LIST:
+    case GET_LIST_BARBER:
       return {
         ...state,
         barbers: payload,

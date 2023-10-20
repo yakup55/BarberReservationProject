@@ -1,37 +1,57 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Container, Heading } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getList8 } from '../../Redux/actions/quentionsActions'
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Container,
+  Heading,
+} from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getList8 } from "../../Redux/actions/quentionsActions";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 export default function Quentions() {
-  const dispacth=useDispatch()
-  const {quentions}=useSelector((state)=>state.quention)
-  useEffect(()=>{
-    dispacth(getList8())
-  },[dispacth])
-  return (
-    <Container mb={10} maxW={1000}>
-        <Accordion defaultIndex={[0]} allowMultiple>
-            <Heading textAlign={'center'} mt={10} mb={10}>Sıkça Sorulan Sorular</Heading>
-            {quentions.map((que)=>(
-              <AccordionItem mb={10}>
-    <h2>
-      <AccordionButton>
-        <Box as="span" flex='1' textAlign='left'>
-          {que.name}
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-    </h2>
-    <AccordionPanel pb={4}>
-     {que.description}
-    </AccordionPanel>
-  </AccordionItem>
-            ))}
-  
+  const dispacth = useDispatch();
+  const { quentions } = useSelector((state) => state.quention);
+  useEffect(() => {
+    dispacth(getList8());
+  }, [dispacth]);
 
- 
-</Accordion>
+  return (
+    <Container maxW={1000}>
+      <Heading mt={12} textAlign={"center"} fontSize={"2xl"} fontStyle={"italic"}>
+        Sıkça Sorulan Sorular
+      </Heading>
+      <Box  pt={5} position="relative" h="50vh">
+        <Accordion allowMultiple>
+          {quentions.map((quention) => (
+      <AccordionItem>
+        {({ isExpanded }) => (
+          <>
+            <h2>
+              <AccordionButton _expanded={{ bg: 'tomato', color: 'white' }}>
+                <Box as="span" flex='1' textAlign='left'>
+              {quention.name}
+                </Box>
+                {isExpanded ? (
+                  <MinusIcon fontSize='12px' />
+                ) : (
+                  <AddIcon fontSize='12px' />
+                )}
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              {quention.description}
+            </AccordionPanel>
+          </>
+        )}
+      </AccordionItem>
+          ))}
+        </Accordion>
+      </Box>
     </Container>
-  )
+  );
 }

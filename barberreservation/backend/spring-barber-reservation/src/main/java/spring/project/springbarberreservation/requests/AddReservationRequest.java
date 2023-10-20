@@ -10,6 +10,7 @@ public class AddReservationRequest {
 	Long barberId;
 	Long hourId;
 	Long calendarId;
+	Long userId;
 	@NotEmpty
 	@Size(min=5)
 	String description;

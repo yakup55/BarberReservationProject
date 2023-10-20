@@ -1,4 +1,10 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Button,
   Container,
   Image,
@@ -10,6 +16,7 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +28,8 @@ import Add2 from "./Add2";
 export default function List2() {
   const navigate = useNavigate();
   const dispacth = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
   const { barbers } = useSelector((state) => state.barber);
   useEffect(() => {
     dispacth(getList2());
@@ -75,14 +84,46 @@ export default function List2() {
                   </Button>
                 </Td>
                 <Td>
-                  {" "}
                   <Button
                     leftIcon={<DeleteIcon></DeleteIcon>}
                     colorScheme="red"
-                    onClick={() => handleDeleted(barber.id)}
+                    onClick={onOpen}
                   >
                     SİL
                   </Button>
+
+                  <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                          Sil
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                          Silmek İstediğinize Emin misiniz ?
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            İPTAL
+                          </Button>
+                          <Button
+                            colorScheme="red"
+                            onClick={
+                              onClose && (() => handleDeleted(barber.id))
+                            }
+                            ml={3}
+                          >
+                            SİL
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+                  </AlertDialog>
                 </Td>
               </Tr>
             ))}

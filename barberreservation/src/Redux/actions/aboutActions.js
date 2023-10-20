@@ -1,6 +1,6 @@
 import AboutService from "../services/aboutService";
 
-export const GET_LIST = "GET_LIST";
+export const GET_LIST_ABOUT = "GET_LIST_ABOUT";
 export const GET_BY_ID = "GET_BY_ID";
 export const ADD = "ADD";
 export const DELETE = "DELETE";
@@ -11,7 +11,7 @@ export function getList() {
   return function (dispacth) {
     service
       .getAboutsList()
-      .then((resp) => dispacth({ type: GET_LIST, payload: resp }));
+      .then((resp) => dispacth({ type: GET_LIST_ABOUT, payload: resp }));
   };
 }
 export function getById(id) {

@@ -13,7 +13,7 @@ public record UpdateUserRequest(
 		String surName
 		) {
 	public Users toEntity() {
-		return new Users(name,surName,null);
+		return new Users(name,surName,null,null);
 	}
 
 }

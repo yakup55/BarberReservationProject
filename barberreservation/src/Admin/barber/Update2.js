@@ -23,21 +23,40 @@ export default function Update2() {
     initialValues: {
       id: id,
       name: "",
+      surName: "",
+      phoneNumber: "",
+      experience: "",
       image: "",
-      description: "",
     },
     onSubmit: (values) => {
       dispacth(update(values));
-      navigate("/admin/aboutslist");
+      navigate("/admin/barberslist");
     },
     validationSchema,
   });
   useEffect(() => {
     dispacth(getById(id));
-  }, []);
+    setValues({
+      id: id,
+      name: barber.name,
+      surName: barber.surName,
+      phoneNumber: barber.phoneNumber,
+      experience: barber.experience,
+      image: barber.image,
+    });
+  }, [
+    id,
+    dispacth,
+    barber.name,
+    barber.surName,
+    barber.phoneNumber,
+    barber.experience,
+    barber.image,
+    setValues,
+  ]);
   return (
     <Container mt={20}>
-      <from onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Input
             variant="outline"
@@ -75,17 +94,39 @@ export default function Update2() {
                 : ""
             }
           />
+          <Input
+            id="experience"
+            name="experience"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values?.experience}
+            error={errors.experience && touched.experience}
+            helperText={
+              errors.experience && touched.experience ? errors.experience : ""
+            }
+            placeholder="Kaç Yıl Deneyimlisiniz"
+          />
+          <Input
+            id="image"
+            name="image"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values?.image}
+            error={errors.image && touched.image}
+            helperText={errors.image && touched.image ? errors.image : ""}
+            placeholder="Resim Giriniz"
+          />
 
           <Button
-            type="save"
-            onClick={() => navigate("/admin/aboutslist")}
+            type="submit"
+            onClick={() => navigate("/admin/barberslist")}
             colorScheme="whatsapp"
             leftIcon={<EditIcon></EditIcon>}
           >
             UPDATE
           </Button>
         </Stack>
-      </from>
+      </form>
     </Container>
   );
 }

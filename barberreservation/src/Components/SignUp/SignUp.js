@@ -1,4 +1,3 @@
-import { AddIcon } from "@chakra-ui/icons";
 import {
   Button,
   FormControl,
@@ -11,24 +10,23 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Select,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { add } from "../../Redux/actions/userActions";
 import { validationSchema } from "../../Admin/user/validationSchema";
+import { openSnacbar } from "../../Redux/actions/appActions";
+import SimpleSnacbar from "../snacbar/SimpleSnacbar";
 
 export default function SignUp() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-  const navigate = useNavigate();
   const dispacth = useDispatch();
-  const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
-    useFormik({
+  const { handleSubmit, handleBlur, handleChange, errors, touched } = useFormik(
+    {
       initialValues: {
         name: "",
         surName: "",
@@ -36,20 +34,21 @@ export default function SignUp() {
       },
       onSubmit: (values) => {
         dispacth(add(values));
+        dispacth(
+          openSnacbar({
+            message: "Has been created",
+            severity: "success",
+          })
+        );
         //navigate("/admin/barberslist");
-        onClose={onClose}
       },
       validationSchema,
-    });
-  useEffect(() => {
-   
-  }, [dispacth]);
+    }
+  );
+  useEffect(() => {}, [dispacth]);
   return (
     <>
-      <Button
-        colorScheme="teal"
-        onClick={onOpen}
-      >
+      <Button colorScheme="teal" onClick={onOpen}>
         Kayıt Ol
       </Button>
 
@@ -96,8 +95,7 @@ export default function SignUp() {
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Telefon Numaranız</FormLabel>
-                <Input 
-                
+                <Input
                   id="phoneNumber"
                   name="phoneNumber"
                   onChange={handleChange}
@@ -112,7 +110,6 @@ export default function SignUp() {
                   placeholder="Telefon Numaranızı Giriniz"
                 />
               </FormControl>
-       
             </ModalBody>
 
             <ModalFooter>

@@ -1,10 +1,10 @@
 import { reservation, reservations } from "../initials/reservationInitials";
 import {
-  GET_LIST,
   GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
+  GET_LIST_RESERVATION,
 } from "../actions/reservationActions";
 
 const initialvales = {
@@ -16,7 +16,7 @@ export default function reservationReducer(
   { type, payload }
 ) {
   switch (type) {
-    case GET_LIST:
+    case GET_LIST_RESERVATION:
       return {
         ...state,
         reservations: payload,

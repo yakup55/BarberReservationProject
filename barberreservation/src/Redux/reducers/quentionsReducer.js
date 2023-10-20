@@ -1,10 +1,10 @@
 import { quention, quentions } from "../initials/quentionInitials";
 import {
-  GET_LIST,
   GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
+  GET_LIST_QUENTION,
 } from "../actions/quentionsActions";
 
 const initialvales = {
@@ -16,7 +16,7 @@ export default function quentionReducer(
   { type, payload }
 ) {
   switch (type) {
-    case GET_LIST:
+    case GET_LIST_QUENTION:
       return {
         ...state,
         quentions: payload,

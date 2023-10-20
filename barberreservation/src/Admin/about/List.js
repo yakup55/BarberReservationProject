@@ -1,4 +1,10 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Button,
   Container,
   Image,
@@ -10,6 +16,7 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +24,13 @@ import { useNavigate } from "react-router-dom";
 import { deleted, getList } from "../../Redux/actions/aboutActions";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import Add from "./Add";
+import Iframe from "react-iframe";
 
 export default function List() {
   const navigate = useNavigate();
   const dispacth = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
   const { abouts } = useSelector((state) => state.about);
   const handleDeleted = (id) => {
     dispacth(deleted(id));
@@ -30,7 +40,7 @@ export default function List() {
   }, [dispacth]);
 
   return (
-    <Container maxW={1500}>
+    <>
       <TableContainer>
         <Table variant="simple">
           <TableCaption>
@@ -59,7 +69,17 @@ export default function List() {
                 <Td>{about.location}</Td>
                 <Td>{about.phoneNumber}</Td>
                 <Td>{about.eposta}</Td>
-                <Td>{about.map}</Td>
+                <Td>
+                  <Iframe
+                    url={`${about.map}`}
+                    width="300px"
+                    height="200px"
+                    id=""
+                    className=""
+                    display="block"
+                    position="relative"
+                  />
+                </Td>
                 <Td>{about.date}</Td>
 
                 <Td>
@@ -69,24 +89,54 @@ export default function List() {
                     colorScheme="whatsapp"
                     onClick={() => navigate(`/admin/aboutupdate/${about.id}`)}
                   >
-                    UPDATE
+                    GÜNCELLE
                   </Button>
                 </Td>
                 <Td>
-                  {" "}
                   <Button
                     leftIcon={<DeleteIcon></DeleteIcon>}
                     colorScheme="red"
-                    onClick={() => handleDeleted(about.id)}
+                    onClick={onOpen}
                   >
-                    DELETE
+                    SİL
                   </Button>
+
+                  <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                          Sil
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                          Silmek İstediğinize Emin misiniz ?
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            İPTAL
+                          </Button>
+                          <Button
+                            colorScheme="red"
+                            onClick={onClose && (()=>handleDeleted(about.id))}
+                            ml={3}
+                          >
+                            SİL
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+                  </AlertDialog>
                 </Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
       </TableContainer>
-    </Container>
+    </>
   );
 }

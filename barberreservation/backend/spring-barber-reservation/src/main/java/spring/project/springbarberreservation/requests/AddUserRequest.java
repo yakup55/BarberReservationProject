@@ -17,7 +17,7 @@ public record AddUserRequest(
 		String phoneNumber
 		) {
 	public Users toEntity() {
-		return new Users(name,surName,phoneNumber);
+		return new Users(name,surName,phoneNumber,null);
 	}
 
 }

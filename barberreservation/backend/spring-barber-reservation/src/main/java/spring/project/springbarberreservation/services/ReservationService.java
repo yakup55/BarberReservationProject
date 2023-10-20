@@ -11,6 +11,7 @@ import spring.project.springbarberreservation.entities.Barber;
 import spring.project.springbarberreservation.entities.Calendar;
 import spring.project.springbarberreservation.entities.Hour;
 import spring.project.springbarberreservation.entities.Reservation;
+import spring.project.springbarberreservation.entities.Users;
 import spring.project.springbarberreservation.repositories.ReservationRepository;
 import spring.project.springbarberreservation.requests.AddReservationRequest;
 import spring.project.springbarberreservation.requests.UpdateReservationRequest;
@@ -24,6 +25,7 @@ private final ReservationRepository reservationRepository;
 private final HourService hService;
 private final BarberService bService;
 private final CalendarService cService;
+private final UserService uService;
 
 public List<Reservation>getAllReservations(){
 	return reservationRepository.findAll();
@@ -37,10 +39,12 @@ public MessageResponse addReservation(AddReservationRequest reservation) {
 	Barber barber=bService.getBarberById(reservation.getBarberId());
 	Hour hour=hService.getHourById(reservation.getHourId());
 	Calendar calendar=cService.getCalendarById(reservation.getCalendarId());
+	Users user=uService.getUserById(reservation.getUserId());
 	Reservation newReservation= new Reservation();
 	newReservation.setBarber(barber);
 	newReservation.setHour(hour);
 	newReservation.setCalendar(calendar);
+	newReservation.setUser(user);
 	newReservation.setDescription(reservation.getDescription());
 	reservationRepository.save(newReservation);
 	return new MessageResponse("Has been created",MessageType.SUCCESS);

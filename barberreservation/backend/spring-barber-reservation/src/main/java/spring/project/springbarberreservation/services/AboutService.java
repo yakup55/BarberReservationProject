@@ -37,7 +37,7 @@ private final AboutRepository repository;
 		}
 		newAbout.update(about);
 		repository.save(newAbout);
-		return new MessageResponse("Has been created", MessageType.SUCCESS);
+		return new MessageResponse("Has been updated", MessageType.SUCCESS);
 	}
 	
 	public MessageResponse deleteAbout(Long id) {

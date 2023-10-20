@@ -37,13 +37,20 @@ public class Reservation extends BaseEntity{
 	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Calendar calendar;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	@JsonIgnore
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	private Users user;
+	
 	private String description;
 
-	public Reservation(Barber barber, Hour hour,Calendar calendar, String description) {
+	public Reservation(Barber barber, Hour hour,Calendar calendar,Users user, String description) {
 		super();
 		this.barber = barber;
 		this.hour = hour;
 		this.calendar=calendar;
+		this.user=user;
 		this.description = description;
 	}
 	

@@ -55,11 +55,15 @@ export default function AdminHome() {
           </CardHeader>
           <CardBody>
             <Text>
-              Toplam berberci sayısı <Badge>{barbers.length}</Badge>
+              Toplam berberci sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{barbers.length}</Badge>
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/barberslist")}>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/barberslist")}
+            >
               Detay
             </Button>
           </CardFooter>
@@ -70,11 +74,17 @@ export default function AdminHome() {
           </CardHeader>
           <CardBody>
             <Text>
-              Toplam Saat sayısı <Badge>{hours.length}</Badge>
+              Toplam Saat sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{hours.length}</Badge>
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/hourslist")}>Detay</Button>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/hourslist")}
+            >
+              Detay
+            </Button>
           </CardFooter>
         </Card>
         <Card bgColor="aqua">
@@ -83,11 +93,17 @@ export default function AdminHome() {
           </CardHeader>
           <CardBody>
             <Text>
-              Toplam kullanıcı sayısı <Badge>{users.length}</Badge>
+              Toplam kullanıcı sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{users.length}</Badge>
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/userslist")}>Detay</Button>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/userslist")}
+            >
+              Detay
+            </Button>
           </CardFooter>
         </Card>
 
@@ -97,11 +113,17 @@ export default function AdminHome() {
           </CardHeader>
           <CardBody>
             <Text>
-              Toplam hakkında sayısı <Badge>{abouts.length}</Badge>
+              Toplam hakkında sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{abouts.length}</Badge>
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/aboutslist")}>Detay</Button>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/aboutslist")}
+            >
+              Detay
+            </Button>
           </CardFooter>
         </Card>
         <Card bgColor="aqua">
@@ -110,11 +132,15 @@ export default function AdminHome() {
           </CardHeader>
           <CardBody>
             <Text>
-              Toplam Rezervasyon sayısı <Badge>{reservations.length}</Badge>
+              Toplam Rezervasyon sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{reservations.length}</Badge>
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/reservationslist")}>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/reservationslist")}
+            >
               Detay
             </Button>
           </CardFooter>
@@ -125,11 +151,15 @@ export default function AdminHome() {
           </CardHeader>
           <CardBody>
             <Text>
-              Toplam Gün sayısı <Badge>{calendars.length}</Badge>
+              Toplam Gün sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{calendars.length}</Badge>
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/calendarslist")}>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/calendarslist")}
+            >
               Detay
             </Button>
           </CardFooter>
@@ -140,11 +170,15 @@ export default function AdminHome() {
           </CardHeader>
           <CardBody>
             <Text>
-              Toplam İletişim sayısı <Badge>{contacts.length}</Badge>
+              Toplam İletişim sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{contacts.length}</Badge>
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/contactslist")}>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/contactslist")}
+            >
               Detay
             </Button>
           </CardFooter>
@@ -155,11 +189,15 @@ export default function AdminHome() {
           </CardHeader>
           <CardBody>
             <Text>
-              Toplam Soru sayısı <Badge>{quentions.length}</Badge>
+              Toplam Soru sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{quentions.length}</Badge>
             </Text>
           </CardBody>
           <CardFooter>
-            <Button onClick={() => navigate("/admin/quentionslist")}>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/quentionslist")}
+            >
               Detay
             </Button>
           </CardFooter>

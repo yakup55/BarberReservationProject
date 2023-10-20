@@ -1,6 +1,6 @@
 import QuentionsService from "../services/quentionsService";
 
-export const GET_LIST = "GET_LIST";
+export const GET_LIST_QUENTION = "GET_LIST_QUENTION";
 export const GET_BY_ID = "GET_BY_ID";
 export const ADD = "ADD";
 export const DELETE = "DELETE";
@@ -11,7 +11,7 @@ export function getList8() {
   return function (dispacth) {
     service
       .getQuentionsList()
-      .then((resp) => dispacth({ type: GET_LIST, payload: resp }));
+      .then((resp) => dispacth({ type: GET_LIST_QUENTION, payload: resp }));
   };
 }
 export function getById(id) {

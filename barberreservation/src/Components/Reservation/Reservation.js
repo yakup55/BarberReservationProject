@@ -35,9 +35,10 @@ export default function Reservation() {
     });
   useEffect(() => {
     dispacth(getList2());
-    dispacth(getList4());
     dispacth(getList3());
+    dispacth(getList4());
   }, [dispacth]);
+  console.log(hours);
   return (
     <Container maxW={1000} marginTop={10}>
       <Heading mb={10} textAlign={"center"}>
@@ -54,7 +55,9 @@ export default function Reservation() {
               onBlur={handleBlur}
               error={errors?.calendarId && touched?.calendarId}
               helperText={
-                errors?.calendarId && touched?.calendarId ? errors?.calendarId : ""
+                errors?.calendarId && touched?.calendarId
+                  ? errors?.calendarId
+                  : ""
               }
               placeholder="Gün Seçiniz"
             >
@@ -76,7 +79,7 @@ export default function Reservation() {
               helperText={
                 errors.barberId && touched.barberId ? errors.barberId : ""
               }
-              placeholder="Saat Seçiniz"
+              placeholder="Berber Seçiniz"
             >
               {barbers.map((barber) => (
                 <option key={barber?.id} value={barber?.id}>
@@ -94,11 +97,11 @@ export default function Reservation() {
               onBlur={handleBlur}
               error={errors.hourId && touched.hourId}
               helperText={errors.hourId && touched.hourId ? errors.hourId : ""}
-              placeholder="Berber Seçiniz"
+              placeholder="Saat Seçiniz"
             >
               {hours.map((hour) => (
                 <option key={hour?.id} value={hour?.id}>
-                  {hour?.name}
+                  {hour?.hour}
                 </option>
               ))}
             </Select>

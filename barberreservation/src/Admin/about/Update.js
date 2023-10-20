@@ -19,61 +19,107 @@ export default function Update() {
     touched,
     values,
     setValues,
-  } = useFormik({
-    initialValues: {
+  } = useFormik(
+    {
+      initialValues: {
+        id: id,
+        name: "",
+        location: "",
+        phoneNumber: "",
+        eposta: "",
+        map: "",
+      },
+      onSubmit: (values) => {
+        dispacth(update(id, values));
+        navigate("/admin/aboutslist");
+      },
+    },
+    validationSchema
+  );
+  useEffect(() => {
+    dispacth(getById(id));
+    setValues({
       id: id,
-      name: "",
-      image: "",
-      description: "",
-    },
-    onSubmit: (values) => {
-      dispacth(update(values));
-      navigate("/admin/aboutslist");
-    },
-    validationSchema,
-  });
-
+      name: about.name,
+      location: about.location,
+      phoneNumber: about.phoneNumber,
+      eposta: about.eposta,
+      map: about.map,
+    });
+  }, [
+    id,
+    dispacth,
+    about.name,
+    about.location,
+    about.phoneNumber,
+    about.eposta,
+    about.map,
+    setValues,
+  ]);
+  console.log(about);
   return (
     <Container mt={20}>
-      <from onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Input
+            value={values?.name}
             variant="outline"
             id="name"
             name="name"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values?.name}
             error={errors?.name && touched?.name}
             helperText={errors?.name && touched?.name ? errors?.name : ""}
           />
           <Input
-            variant="outline"
-            id="image"
-            name="image"
+            value={values?.location}
+            id="location"
+            name="location"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values?.image}
-            error={errors?.image && touched?.image}
-            helperText={errors?.image && touched?.image ? errors?.image : ""}
+            error={errors.location && touched.location}
+            helperText={
+              errors.location && touched.location ? errors.location : ""
+            }
+            placeholder="Konum  Ekleyiniz"
           />
           <Input
-            variant="outline"
-            id="description"
-            name="description"
+            value={values?.phoneNumber}
+            id="phoneNumber"
+            name="phoneNumber"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.description}
-            error={errors?.description && touched?.description}
+            error={errors.phoneNumber && touched.phoneNumber}
             helperText={
-              errors?.description && touched?.description
-                ? errors?.description
+              errors.phoneNumber && touched.phoneNumber
+                ? errors.phoneNumber
                 : ""
             }
+            placeholder="Telefon Numaranızı Giriniz"
+          />
+          <Input
+            value={values?.eposta}
+            id="eposta"
+            name="eposta"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.eposta && touched.eposta}
+            helperText={errors.eposta && touched.eposta ? errors.eposta : ""}
+            placeholder="E-Posta Adresinizi Giriniz "
+          />
+          <Input
+            value={values?.map}
+            id="map"
+            name="map"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.map && touched.map}
+            helperText={errors.map && touched.map ? errors.map : ""}
+            placeholder="Harita Uzantısını Giriniz"
           />
 
           <Button
-            type="save"
+            type="submit"
             onClick={() => navigate("/admin/aboutslist")}
             colorScheme="whatsapp"
             leftIcon={<EditIcon></EditIcon>}
@@ -81,7 +127,7 @@ export default function Update() {
             UPDATE
           </Button>
         </Stack>
-      </from>
+      </form>
     </Container>
   );
 }

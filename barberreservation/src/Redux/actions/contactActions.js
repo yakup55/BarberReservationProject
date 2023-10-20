@@ -1,6 +1,6 @@
 import ContactService from "../services/contactService";
 
-export const GET_LIST = "GET_LIST";
+export const GET_LIST_CONTACT = "GET_LIST_CONTACT";
 export const GET_BY_ID = "GET_BY_ID";
 export const ADD = "ADD";
 export const DELETE = "DELETE";
@@ -11,7 +11,7 @@ export function getList7() {
   return function (dispacth) {
     service
       .getContactsList()
-      .then((resp) => dispacth({ type: GET_LIST, payload: resp }));
+      .then((resp) => dispacth({ type: GET_LIST_CONTACT, payload: resp }));
   };
 }
 export function getById(id) {

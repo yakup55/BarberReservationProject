@@ -1,10 +1,10 @@
 import { user, users } from "../initials/userInitials";
 import {
-  GET_LIST,
   GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
+  GET_LIST_USER,
 } from "../actions/userActions";
 
 const initialvales = {
@@ -13,7 +13,7 @@ const initialvales = {
 };
 export default function userReducer(state = initialvales, { type, payload }) {
   switch (type) {
-    case GET_LIST:
+    case GET_LIST_USER:
       return {
         ...state,
         users: payload,

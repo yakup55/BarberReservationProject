@@ -6,6 +6,7 @@ import userReducer from "./userReducer";
 import calendarReducer from "./calendarReducer";
 import quentionReducer from "./quentionsReducer";
 import contactReducer from "./contactReducer";
+import { appReducer } from "./appReducer";
 const { combineReducers } = require("redux");
 
 const rootReducer = combineReducers({
@@ -17,5 +18,6 @@ const rootReducer = combineReducers({
   calendar: calendarReducer,
   contact: contactReducer,
   quention: quentionReducer,
+  app: appReducer,
 });
 export default rootReducer;

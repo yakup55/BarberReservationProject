@@ -40,13 +40,17 @@ public void update(UpdateHourRequest hour) {
 }
 
 
-
-public Hour(String hour, Boolean status, Barber barber) {
+public Hour(String hour, Boolean status, Barber barber, List<Reservation> reservations) {
 	super();
 	this.hour = hour;
 	this.status = status;
 	this.barber = barber;
+	this.reservations = reservations;
 }
+
+
+
+
 
 
 

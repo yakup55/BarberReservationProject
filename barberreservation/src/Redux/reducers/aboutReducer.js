@@ -1,9 +1,10 @@
 import {about,abouts} from "../initials/aboutInitials"
-import {GET_LIST,
+import {
     GET_BY_ID,
     ADD,
     DELETE,
-    UPDATE
+    UPDATE,
+    GET_LIST_ABOUT
 } from "../actions/aboutActions"
 
 const initialvales ={
@@ -12,7 +13,7 @@ const initialvales ={
 };
 export default function aboutReducer(state=initialvales,{type,payload}){
     switch (type) {
-        case GET_LIST:
+        case GET_LIST_ABOUT:
            return {
             ...state,
             abouts:payload

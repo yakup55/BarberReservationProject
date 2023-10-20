@@ -19,7 +19,7 @@ public record AddAboutRequest(
 		@Size(min=5,max=100)
 		String eposta,
 		@NotEmpty
-		@Size(min=5,max=3000)
+		@Size(min=5,max=5000	)
 		String map
 		) {
 public About toEntity() {

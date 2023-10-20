@@ -1,6 +1,6 @@
 import BarberService from "../services/barberService";
 
-export const GET_LIST = "GET_LIST";
+export const GET_LIST_BARBER = "GET_LIST_BARBER";
 export const GET_BY_ID = "GET_BY_ID";
 export const ADD = "ADD";
 export const DELETE = "DELETE";
@@ -11,7 +11,7 @@ export function getList2() {
   return function (dispacth) {
     service
       .getBarbersList()
-      .then((resp) => dispacth({ type: GET_LIST, payload: resp }));
+      .then((resp) => dispacth({ type: GET_LIST_BARBER, payload: resp }));
   };
 }
 export function getById(id) {

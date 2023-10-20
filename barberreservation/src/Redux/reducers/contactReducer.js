@@ -1,11 +1,11 @@
 import { contact, contacts } from "../initials/contactInitials";
 import {
-  GET_LIST,
   GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
 } from "../actions/quentionsActions";
+import { GET_LIST_CONTACT } from "../actions/contactActions";
 
 const initialvales = {
   contact,
@@ -16,7 +16,7 @@ export default function contactReducer(
   { type, payload }
 ) {
   switch (type) {
-    case GET_LIST:
+    case GET_LIST_CONTACT:
       return {
         ...state,
         contacts: payload,

@@ -9,10 +9,11 @@ public record ReservationResponse(
 		Long barberId,
 		Long hourId,
 		Long calendarId,
+		Long userId,
 		String description,
 		LocalDateTime date
 		) {
 public static ReservationResponse fromEntity(Reservation reservation) {
-	return new ReservationResponse(reservation.getId(),reservation.getBarber().getId(),reservation.getHour().getId(),reservation.getCalendar().getId(),reservation.getDescription(),reservation.getCreatedDate());
+	return new ReservationResponse(reservation.getId(),reservation.getBarber().getId(),reservation.getHour().getId(),reservation.getCalendar().getId(),reservation.getUser().getId(),reservation.getDescription(),reservation.getCreatedDate());
 }
 }

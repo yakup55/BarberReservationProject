@@ -1,6 +1,6 @@
 import ReservationService from "../services/reservationService";
 
-export const GET_LIST = "GET_LIST";
+export const GET_LIST_RESERVATION = "GET_LIST_RESERVATION";
 export const GET_BY_ID = "GET_BY_ID";
 export const ADD = "ADD";
 export const DELETE = "DELETE";
@@ -11,7 +11,7 @@ export function getList5() {
   return function (dispacth) {
     service
       .getReservationsList()
-      .then((resp) => dispacth({ type: GET_LIST, payload: resp }));
+      .then((resp) => dispacth({ type: GET_LIST_RESERVATION, payload: resp }));
   };
 }
 export function getById(id) {
