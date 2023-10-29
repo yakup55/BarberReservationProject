@@ -10,7 +10,7 @@ class CalendarService {
   }
   async getCalendarById(id) {
     const url = `${this.baseUrl}/${id}`;
-    return (await axios.get(url)).then((resp) => resp.data);
+    return await axios.get(url).then((resp) => resp.data);
   }
   async addCalendar(calendar) {
     const url = `${this.baseUrl}/addCalendar`;

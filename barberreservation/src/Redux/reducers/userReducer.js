@@ -1,10 +1,10 @@
 import { user, users } from "../initials/userInitials";
 import {
-  GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
   GET_LIST_USER,
+  GET_BY_USER_ID,
 } from "../actions/userActions";
 
 const initialvales = {
@@ -18,7 +18,7 @@ export default function userReducer(state = initialvales, { type, payload }) {
         ...state,
         users: payload,
       };
-    case GET_BY_ID:
+    case GET_BY_USER_ID:
       return {
         ...state,
         user: payload,

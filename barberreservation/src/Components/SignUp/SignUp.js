@@ -15,7 +15,7 @@ import {
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { add } from "../../Redux/actions/userActions";
+import { register } from "../../Redux/actions/authActions";
 import { validationSchema } from "../../Admin/user/validationSchema";
 import { openSnacbar } from "../../Redux/actions/appActions";
 import SimpleSnacbar from "../snacbar/SimpleSnacbar";
@@ -28,12 +28,13 @@ export default function SignUp() {
   const { handleSubmit, handleBlur, handleChange, errors, touched } = useFormik(
     {
       initialValues: {
-        name: "",
+        userName: "",
         surName: "",
         phoneNumber: "",
+        password: "",
       },
       onSubmit: (values) => {
-        dispacth(add(values));
+        dispacth(register(values));
         dispacth(
           openSnacbar({
             message: "Has been created",
@@ -42,10 +43,9 @@ export default function SignUp() {
         );
         //navigate("/admin/barberslist");
       },
-      validationSchema,
-    }
+    },
+    validationSchema
   );
-  useEffect(() => {}, [dispacth]);
   return (
     <>
       <Button colorScheme="teal" onClick={onOpen}>
@@ -67,12 +67,14 @@ export default function SignUp() {
               <FormControl>
                 <FormLabel>Adınız</FormLabel>
                 <Input
-                  id="name"
-                  name="name"
+                  id="userName"
+                  name="userName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.name && touched.name}
-                  helperText={errors.name && touched.name ? errors.name : ""}
+                  error={errors.userName && touched.userName}
+                  helperText={
+                    errors.userName && touched.userName ? errors.userName : ""
+                  }
                   ref={initialRef}
                   placeholder="Adınızı Giriniz"
                 />
@@ -108,6 +110,21 @@ export default function SignUp() {
                   }
                   ref={initialRef}
                   placeholder="Telefon Numaranızı Giriniz"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Şifre Giriniz</FormLabel>
+                <Input
+                  id="password"
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.password && touched.password}
+                  helperText={
+                    errors.password && touched.password ? errors.password : ""
+                  }
+                  ref={initialRef}
+                  placeholder="Şifre  Giriniz"
                 />
               </FormControl>
             </ModalBody>

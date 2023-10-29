@@ -1,7 +1,7 @@
 import UserService from "../services/userService";
 
 export const GET_LIST_USER = "GET_LIST_USER";
-export const GET_BY_ID = "GET_BY_ID";
+export const GET_BY_USER_ID = "GET_BY_USER_ID";
 export const ADD = "ADD";
 export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
@@ -14,11 +14,11 @@ export function getList6() {
       .then((resp) => dispacth({ type: GET_LIST_USER, payload: resp }));
   };
 }
-export function getById(id) {
+export function getByUserId(id) {
   return function (dispacth) {
     service
       .getByIdUser(id)
-      .then((resp) => dispacth({ type: GET_BY_ID, payload: resp }));
+      .then((resp) => dispacth({ type: GET_BY_USER_ID, payload: resp }));
   };
 }
 
@@ -36,7 +36,7 @@ export function update(user) {
       .then((resp) => dispacth({ type: UPDATE, payload: resp }));
   };
 }
-export function deleted(id) {
+export function userDeleted(id) {
   return function (dispacth) {
     service
       .deleteUser(id)

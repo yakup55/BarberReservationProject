@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import spring.project.springbarberreservation.entities.Barber;
 
-public interface BarberRepository extends JpaRepository<Barber, Long>{
 
+public interface BarberRepository extends JpaRepository<Barber, Long>{
+	Barber findByUserName(String userName);
+	Barber findByPhoneNumber(String phoneNumber);
 }

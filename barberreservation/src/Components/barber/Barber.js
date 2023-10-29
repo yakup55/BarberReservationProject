@@ -27,7 +27,7 @@ export default function Barber() {
   }, [dispacth, barbers]);
 
   return (
-    <Container maxW={1000}>
+    <Container maxW={800}>
       <Heading
         mb={10}
         textAlign={"center"}
@@ -36,9 +36,9 @@ export default function Barber() {
       >
         Berberlerimiz
       </Heading>
-      <SimpleGrid columns={3} spacing={10}>
+      <SimpleGrid columns={2} spacing={10}>
         {barbers.map((barber) => (
-          <Card>
+          <Card width={200}>
             <div
               style={{
                 display: "flex",

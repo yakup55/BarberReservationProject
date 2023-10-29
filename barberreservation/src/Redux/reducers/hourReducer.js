@@ -1,10 +1,10 @@
 import { hour, hours } from "../initials/hourInitials";
 import {
-  GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
   GET_LIST_HOUR,
+  GET_BY_HOUR_ID,
 } from "../actions/hourActions";
 
 const initialvales = {
@@ -18,7 +18,7 @@ export default function hourReducer(state = initialvales, { type, payload }) {
         ...state,
         hours: payload,
       };
-    case GET_BY_ID:
+    case GET_BY_HOUR_ID:
       return {
         ...state,
         hour: payload,

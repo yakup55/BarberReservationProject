@@ -25,33 +25,26 @@ import spring.project.springbarberreservation.security.JwtAuthenticationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfiguration {
-
-	
 	private  JwtAuthenticationEntryPoint handler;
-	
-  
-
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
     	return new JwtAuthenticationFilter();
     }
-
+  
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("http://localhost:3000/");
         config.addAllowedHeader("*");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("HEAD");
@@ -103,11 +96,9 @@ public class SecurityConfig extends WebSecurityConfiguration {
     		.permitAll()
     		.requestMatchers(HttpMethod.GET, "/calendars/**")
     		.permitAll()
-    		.requestMatchers(HttpMethod.GET, "/reservation/**")
+    		.requestMatchers(HttpMethod.GET, "/reservations/**")
     		.permitAll()
     		.requestMatchers(HttpMethod.GET, "/quentions/**")
-    		.permitAll()
-    		.requestMatchers("/auth/**")
     		.permitAll()
     		.requestMatchers(HttpMethod.POST, "/reservations/addReservation")
     		.permitAll()
@@ -116,8 +107,6 @@ public class SecurityConfig extends WebSecurityConfiguration {
     		.requestMatchers(HttpMethod.POST, "/hours/addHour")
     		.permitAll()
     		.requestMatchers(HttpMethod.POST, "/experiences/addExperience")
-    		.permitAll()
-    		.requestMatchers(HttpMethod.POST, "/users/addUser")
     		.permitAll()
     		.requestMatchers(HttpMethod.POST, "/barbers/addBarber")
     		.permitAll()
@@ -162,6 +151,10 @@ public class SecurityConfig extends WebSecurityConfiguration {
     		.requestMatchers(HttpMethod.PUT, "/quentions/**")
     		.permitAll()
     		.requestMatchers(HttpMethod.PUT, "/contacts/**")
+    		.permitAll()
+    		.requestMatchers("/auths/**")
+    		.permitAll()
+    		.requestMatchers("/barbers/**")
     		.permitAll()
     		.anyRequest().authenticated();
     		

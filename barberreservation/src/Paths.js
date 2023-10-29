@@ -16,15 +16,23 @@ import List3 from "./Admin/calendar/List3";
 import List7 from "./Admin/contact/List7";
 import List8 from "./Admin/quention/List8";
 import AdminHome from "./Admin/home/AdminHome";
+import User from "./Components/user/User";
+import AdminProfile from "./Admin/home/AdminProfile";
 
 export default function Paths() {
   return (
     <Routes>
-      <Route path="/" element={<Home></Home>} ></Route>
+      <Route path="/" element={<Home></Home>}></Route>
       <Route path="/login" element={<Login></Login>}></Route>
+      <Route path="/user" element={<User></User>}></Route>
 
       {/*ADMİN*/}
       <Route path="/admin" element={<AdminHome></AdminHome>}></Route>
+      <Route
+        path="/adminprofile"
+        element={<AdminProfile></AdminProfile>}
+      ></Route>
+
       {/*ADMİN ABOUT*/}
       <Route path="/admin/aboutslist" element={<List></List>}></Route>
       <Route path="/admin/aboutupdate/:id" element={<Update></Update>}></Route>

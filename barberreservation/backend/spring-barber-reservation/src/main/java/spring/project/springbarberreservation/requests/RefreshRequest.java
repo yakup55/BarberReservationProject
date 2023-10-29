@@ -1,8 +1,10 @@
 package spring.project.springbarberreservation.requests;
 
-public record RefreshRequest(
-		Long userId,
-		String refreshToken
-		) {
+import lombok.Data;
 
+@Data
+public class RefreshRequest {
+	Long userId;
+	Long barberId;
+	String refreshToken;
 }

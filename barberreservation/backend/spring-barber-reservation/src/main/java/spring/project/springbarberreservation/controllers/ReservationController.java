@@ -33,6 +33,17 @@ public List<ReservationResponse> getAllReservation(){
 public ReservationResponse getReservationById(@PathVariable Long id) {
 	return ReservationResponse.fromEntity(reservationService.getReservationById(id));
 }
+
+@GetMapping("/user/{userId}")
+public ReservationResponse getUserId(@PathVariable Long userId) {
+	return ReservationResponse.fromEntity(reservationService.getUserId(userId));
+}
+
+@GetMapping("/barber/{barberId}")
+public ReservationResponse getBarberId(@PathVariable Long barberId) {
+	return ReservationResponse.fromEntity(reservationService. getBarberId(barberId));
+}
+
 @PostMapping("/{addReservation}")
 public MessageResponse addReservatiom(@RequestBody @Valid AddReservationRequest addReservationRequest) {
 	return reservationService.addReservation(addReservationRequest);

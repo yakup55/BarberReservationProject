@@ -15,12 +15,23 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { add } from "../../Redux/actions/barberActions";
 import { validationSchema } from "./validationSchema";
 export default function Add2() {
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    const imageUrl = URL.createObjectURL(selectedFile);
+    console.log(selectedFile);
+    // Resmi göster
+    setPreviewUrl(imageUrl);
+    handleChange(event);
+  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -29,11 +40,12 @@ export default function Add2() {
   const { handleSubmit, handleBlur, handleChange, errors, touched } = useFormik(
     {
       initialValues: {
-        name: "",
+        userName: "",
         surName: "",
         phoneNumber: "",
         experience: "",
-        image: "",
+        image: null,
+        password: "",
       },
       onSubmit: (values) => {
         dispacth(add(values));
@@ -69,12 +81,14 @@ export default function Add2() {
               <FormControl>
                 <FormLabel>Adınız</FormLabel>
                 <Input
-                  id="name"
-                  name="name"
+                  id="userName"
+                  name="userName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.name && touched.name}
-                  helperText={errors.name && touched.name ? errors.name : ""}
+                  error={errors.userName && touched.userName}
+                  helperText={
+                    errors.userName && touched.userName ? errors.userName : ""
+                  }
                   ref={initialRef}
                   placeholder="Adınızı Giriniz"
                 />
@@ -134,12 +148,29 @@ export default function Add2() {
                 <Input
                   id="image"
                   name="image"
-                  onChange={handleChange}
+                  type="file"
+                  onChange={handleFileChange}
                   onBlur={handleBlur}
                   error={errors.image && touched.image}
                   helperText={errors.image && touched.image ? errors.image : ""}
                   ref={initialRef}
                   placeholder="Resim Giriniz"
+                />
+                {previewUrl && <img src={previewUrl} alt="Seçilen Resim" />}
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Şifrenizi Giriniz</FormLabel>
+                <Input
+                  id="password"
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.password && touched.password}
+                  helperText={
+                    errors.password && touched.password ? errors.password : ""
+                  }
+                  ref={initialRef}
+                  placeholder="Şifrenizi Giriniz"
                 />
               </FormControl>
             </ModalBody>

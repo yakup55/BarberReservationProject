@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getById, update } from "../../Redux/actions/calendarActions";
+import { getByCalendarId, update } from "../../Redux/actions/calendarActions";
 import { validationSchema } from "./validationSchema";
 import { Button, Container, Input, Stack } from "@chakra-ui/react";
 
@@ -33,7 +33,7 @@ export default function Update3() {
     validationSchema
   );
   useEffect(() => {
-    dispacth(getById(id));
+    dispacth(getByCalendarId(id));
     setValues({
       id: id,
       dates: calendar?.dates,

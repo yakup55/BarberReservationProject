@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getById, update } from "../../Redux/actions/barberActions";
+import { getByBarberId, update } from "../../Redux/actions/barberActions";
 import { validationSchema } from "./validationSchema";
 export default function Update2() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function Update2() {
     validationSchema,
   });
   useEffect(() => {
-    dispacth(getById(id));
+    dispacth(getByBarberId(id));
     setValues({
       id: id,
       name: barber.name,

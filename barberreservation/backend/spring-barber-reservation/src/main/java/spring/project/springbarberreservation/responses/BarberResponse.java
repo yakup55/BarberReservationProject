@@ -6,14 +6,15 @@ import spring.project.springbarberreservation.entities.Barber;
 
 public record BarberResponse(
 		Long id,
-		String name,
+		String userName,
 		String surName,
 		String phoneNumber,
 		String image,
 		String experience,
+		String password,
 		LocalDateTime date
 		) {
 public static BarberResponse fromEntity(Barber barber) {
-	return new BarberResponse(barber.getId(),barber.getName(),barber.getSurName(),barber.getPhoneNumber(),barber.getImage(),barber.getExpriences(),barber.getCreatedDate());
+	return new BarberResponse(barber.getId(),barber.getUserName(),barber.getSurName(),barber.getPhoneNumber(),barber.getImage(),barber.getExpriences(),barber.getPassword(),barber.getCreatedDate());
 }
 }

@@ -6,30 +6,34 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 public class Users extends BaseEntity {
-	private String name;
+	private String userName;
 	private String surName;
 	private String phoneNumber;
+	private String password;
 	@OneToMany(mappedBy = "user")
 	private List<Reservation>reservations;
 	
 
 	
 	public void update(Users user) {
-		this.name=user.name;
+		this.userName=user.userName;
 		this.surName=user.surName;
 	}
 
 
 
-	public Users(String name, String surName, String phoneNumber, List<Reservation> reservations) {
+	public Users(String name, String surName, String phoneNumber,String password, List<Reservation> reservations) {
 		super();
-		this.name = name;
+		this.userName = name;
 		this.surName = surName;
 		this.phoneNumber = phoneNumber;
+		this.password=password;
 		this.reservations = reservations;
 	}
 }

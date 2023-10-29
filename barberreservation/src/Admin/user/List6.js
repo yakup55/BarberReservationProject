@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleted, getList6 } from "../../Redux/actions/userActions";
+import { getList6, userDeleted } from "../../Redux/actions/userActions";
 import { DeleteIcon } from "@chakra-ui/icons";
 
 export default function List6() {
@@ -27,7 +27,7 @@ export default function List6() {
   const cancelRef = React.useRef();
   const { users } = useSelector((state) => state.user);
   const handleDeleted = (id) => {
-    dispacth(deleted(id));
+    dispacth(userDeleted(id));
   };
   useEffect(() => {
     dispacth(getList6());
@@ -55,7 +55,7 @@ export default function List6() {
                 <Td>{user.phoneNumber}</Td>
                 <Td>{user.date}</Td>
                 <Td>
-                <Button
+                  <Button
                     leftIcon={<DeleteIcon></DeleteIcon>}
                     colorScheme="red"
                     onClick={onOpen}
@@ -84,9 +84,7 @@ export default function List6() {
                           </Button>
                           <Button
                             colorScheme="red"
-                            onClick={
-                              onClose && (() => handleDeleted(user.id))
-                            }
+                            onClick={onClose && (() => handleDeleted(user.id))}
                             ml={3}
                           >
                             SİL

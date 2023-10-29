@@ -25,20 +25,29 @@ import lombok.Setter;
 public class RefreshToken extends BaseEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name="user_id", nullable=true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	Users users;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="barber_id", nullable=true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	Barber barber;
 	
 	String token;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	Date expiryDate;
 
-	public RefreshToken(Users users, String token, Date expiryDate) {
+	public RefreshToken(Users users, Barber barber, String token, Date expiryDate) {
 		super();
 		this.users = users;
+		this.barber = barber;
 		this.token = token;
 		this.expiryDate = expiryDate;
 	}
+
+
 }

@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import spring.project.springbarberreservation.entities.Barber;
+
 import spring.project.springbarberreservation.repositories.BarberRepository;
 import spring.project.springbarberreservation.responses.MessageResponse;
 import spring.project.springbarberreservation.responses.MessageType;
@@ -26,6 +27,12 @@ public class BarberService {
 	public Barber getBarberById(Long id) {
 		return repository.findById(id).orElseThrow(()->new EntityNotFoundException("Id Not Found".formatted(id)));
 		
+	}
+	public Barber getOneUserByBarberName(String userName) {
+		return repository.findByUserName(userName);
+	}
+	public Barber getOneByPhoneNumber(String phoneNumber) {
+		return repository.findByPhoneNumber(phoneNumber);
 	}
 	public MessageResponse addBarber(Barber barber) {
 	        repository.save(barber);

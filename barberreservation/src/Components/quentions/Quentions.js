@@ -21,7 +21,7 @@ export default function Quentions() {
   }, [dispacth]);
 
   return (
-    <Container maxW={1000}>
+    <Container maxW={800}>
       <Heading mt={12} textAlign={"center"} fontSize={"2xl"} fontStyle={"italic"}>
         Sıkça Sorulan Sorular
       </Heading>

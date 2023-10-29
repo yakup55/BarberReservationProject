@@ -13,31 +13,74 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { add } from "../../Redux/actions/userActions";
+import { login, setUser } from "../../Redux/actions/authActions";
 import { validationSchema } from "../../Admin/user/validationSchema";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../../Redux/services/authService";
+import { openSnacbar } from "../../Redux/actions/appActions";
+import BarberLogin from "./BarberLogin";
 
 export default function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const dispacth = useDispatch();
+  const navigate = useNavigate();
+  const service = new AuthService();
   const { handleSubmit, handleBlur, handleChange, errors, touched } = useFormik(
     {
       initialValues: {
-        name: "",
-        surName: "",
-        phoneNumber: "",
+        userName: "",
+        password: "",
       },
-      onSubmit: (values) => {
-        dispacth(add(values));
-        //navigate("/admin/barberslist");
+      onSubmit: async (values) => {
+        dispacth(login(values));
+        const result = await service.login(values);
+        if (result.status === 200) {
+          dispacth(
+            openSnacbar({
+              message: "Login succeeded.",
+              severity: "success",
+            })
+          );
+
+          const resp = result.data;
+
+          localStorage.setItem("userId", resp.userId);
+          localStorage.setItem("userName", resp.userName);
+          localStorage.setItem("surName", resp.surName);
+          localStorage.setItem("phoneNumber", resp.phoneNumber);
+          localStorage.setItem("message", resp.message);
+          localStorage.setItem("accessToken", resp.accessToken);
+          localStorage.setItem("refreshToken", resp.refreshToken);
+          localStorage.setItem("isLogin", true);
+
+          dispacth(
+            setUser({
+              userId: resp.userId,
+              userName: resp.userName,
+              accessToken: resp.accessToken,
+              isLogin: true,
+            })
+          );
+          navigate("/user");
+        }
+
+        if (result.status === 401) {
+          dispacth(
+            openSnacbar({
+              message: "Login failed.",
+              severity: "error",
+            })
+          );
+        }
       },
     },
     validationSchema
   );
-  useEffect(() => {}, [dispacth]);
+  console.log(localStorage);
   return (
     <>
       <Button colorScheme="teal" onClick={onOpen}>
@@ -57,26 +100,50 @@ export default function Login() {
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl mt={4}>
-                <FormLabel>Telefon Numaranız</FormLabel>
+                <FormLabel>Kullanıcı Adınızı Giriniz</FormLabel>
                 <Input
-                  id="phoneNumber"
-                  name="phoneNumber"
+                  id="userName"
+                  name="userName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.phoneNumber && touched.phoneNumber}
+                  error={errors.userName && touched.userName}
                   helperText={
-                    errors.phoneNumber && touched.phoneNumber
-                      ? errors.phoneNumber
-                      : ""
+                    errors.userName && touched.userName ? errors.userName : ""
                   }
                   ref={initialRef}
-                  placeholder="Telefon Numaranızı Giriniz"
+                  placeholder="Kullanıcı Adınızı  Giriniz"
                 />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Şifrenizi Giriniz</FormLabel>
+                <Input
+                  id="password"
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.password && touched.password}
+                  helperText={
+                    errors.password && touched.password ? errors.password : ""
+                  }
+                  ref={initialRef}
+                  placeholder="Şifrenizi Giriniz"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <>
+                  <BarberLogin></BarberLogin>
+                </>
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
-              <Button type="submit" colorScheme="blue" mr={3}>
+              <Button
+                type="submit"
+                onClick={onClose && (() => navigate("/user"))}
+                colorScheme="blue"
+                mr={3}
+              >
                 Giriş Yap
               </Button>
               <Button onClick={onClose}>İptal</Button>

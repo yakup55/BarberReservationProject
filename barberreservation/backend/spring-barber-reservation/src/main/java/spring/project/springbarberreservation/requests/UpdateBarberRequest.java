@@ -9,7 +9,7 @@ import spring.project.springbarberreservation.entities.Barber;
 public record UpdateBarberRequest (
 		@NotEmpty
 		@Size(min=2,max=20)
-		String name,
+		String userName,
 		@NotEmpty
 		@Size(min=2,max=30)
 		String surName,
@@ -17,13 +17,15 @@ public record UpdateBarberRequest (
 		@Size(min=11,max=11)
 		String phoneNumber,
 		@NotEmpty
-		@Size(min=2,max=30)
+		@Size(max=30)
 		String experience,
 		@Size(min=2,max=500)
-		String image
+		String image,
+		@Size(min=2,max=20)
+		String password
 		)  {
 	public Barber toEntity() {
-		return new Barber(name, surName, phoneNumber, image, experience, null);
+		return new Barber(userName, surName, phoneNumber, image, experience, null,password);
 	}
 
 }

@@ -5,6 +5,8 @@ import {
   DELETE,
   UPDATE,
   GET_LIST_RESERVATION,
+  FIND_BY_USER_ID,
+  FIND_BY_BARBER_ID,
 } from "../actions/reservationActions";
 
 const initialvales = {
@@ -22,6 +24,16 @@ export default function reservationReducer(
         reservations: payload,
       };
     case GET_BY_ID:
+      return {
+        ...state,
+        reservation: payload,
+      };
+    case FIND_BY_USER_ID:
+      return {
+        ...state,
+        reservation: payload,
+      };
+    case FIND_BY_BARBER_ID:
       return {
         ...state,
         reservation: payload,

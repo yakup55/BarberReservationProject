@@ -1,7 +1,7 @@
 import HourService from "../services/hourService";
 
 export const GET_LIST_HOUR = "GET_LIST_HOUR";
-export const GET_BY_ID = "GET_BY_ID";
+export const GET_BY_HOUR_ID = "GET_BY_HOUR_ID";
 export const ADD = "ADD";
 export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
@@ -14,11 +14,11 @@ export function getList4() {
       .then((resp) => dispacth({ type: GET_LIST_HOUR, payload: resp }));
   };
 }
-export function getById(id) {
+export function getByHourId(id) {
   return function (dispacth) {
     service
       .getByIdHour(id)
-      .then((resp) => dispacth({ type: GET_BY_ID, payload: resp }));
+      .then((resp) => dispacth({ type: GET_BY_HOUR_ID, payload: resp }));
   };
 }
 

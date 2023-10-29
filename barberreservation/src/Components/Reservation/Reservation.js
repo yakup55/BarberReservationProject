@@ -26,6 +26,7 @@ export default function Reservation() {
         barberId: 0,
         hourId: 0,
         calendarId: 0,
+        userId: localStorage.getItem("userId"),
         description: "",
       },
       onSubmit: (values) => {
@@ -38,9 +39,9 @@ export default function Reservation() {
     dispacth(getList3());
     dispacth(getList4());
   }, [dispacth]);
-  console.log(hours);
+
   return (
-    <Container maxW={1000} marginTop={10}>
+    <Container maxW={800} marginTop={10}>
       <Heading mb={10} textAlign={"center"}>
         Randevu Alın
       </Heading>
@@ -83,7 +84,7 @@ export default function Reservation() {
             >
               {barbers.map((barber) => (
                 <option key={barber?.id} value={barber?.id}>
-                  {barber?.name}
+                  {barber?.userName}
                 </option>
               ))}
             </Select>

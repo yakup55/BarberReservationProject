@@ -12,7 +12,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getList } from "../../Redux/actions/aboutActions";
 import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Iframe from "react-iframe";
 export default function About() {
   const dispacth = useDispatch();
@@ -20,7 +20,7 @@ export default function About() {
   useEffect(() => {
     dispacth(getList());
   }, [dispacth]);
-  console.log(abouts);
+
   return (
     <Container maxW={1000} mt={10} mb={10}>
       <SimpleGrid columns={1} spacing={10}>
@@ -30,19 +30,22 @@ export default function About() {
             overflow="hidden"
             variant="outline"
           >
-          <Iframe url={`${about.map}`}
-        width="640px"
-        height="320px"
-        id=""
-        className=""
-        display="block"
-        position="relative"/>
+            <Iframe
+              url={`${about.map}`}
+              width="640px"
+              height="320px"
+              id=""
+              className=""
+              display="block"
+              position="relative"
+            />
             <Stack spacing={10}>
               <CardBody>
                 <Heading size="md">İletişim Bilgilerimiz</Heading>
                 <Heading size="sm">{about.name}</Heading>
                 <Text py="3">
-                  <LocationOnIcon fontSize="medium"></LocationOnIcon> {about.location}
+                  <LocationOnIcon fontSize="medium"></LocationOnIcon>{" "}
+                  {about.location}
                 </Text>
                 <Text py="3">
                   <PhoneIcon fontSize={"2xl"}></PhoneIcon> {about.phoneNumber}

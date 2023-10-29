@@ -61,7 +61,7 @@ export default function List2() {
             {barbers.map((barber) => (
               <Tr>
                 <Td>{barber.id}</Td>
-                <Td>{barber.name}</Td>
+                <Td>{barber.userName}</Td>
                 <Td>{barber.surName}</Td>
                 <Td>{barber.phoneNumber}</Td>
                 <Td>{barber.experience}</Td>
@@ -70,7 +70,7 @@ export default function List2() {
                     boxSize="80px"
                     objectFit="cover"
                     src={`${barber.image}`}
-                    alt={barber.name}
+                    alt={barber.userName}
                   />
                 </Td>
                 <Td>{barber.date}</Td>

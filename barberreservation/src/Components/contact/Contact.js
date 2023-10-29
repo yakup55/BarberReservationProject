@@ -21,7 +21,7 @@ export default function Contact() {
     validationSchema
   );
   return (
-    <Container maxW={700}>
+    <Container maxW={800}>
       <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Heading textAlign={"center"} fontSize={"2xl"} fontStyle={"italic"}>
@@ -65,7 +65,7 @@ export default function Contact() {
             variant="outline"
             placeholder="Açıklama  Giriniz"
           />
-          <Button colorScheme="whatsapp" type="submit">
+          <Button width={100}  alignItems="center" colorScheme="whatsapp" type="submit">
             Gönder
           </Button>
         </Stack>

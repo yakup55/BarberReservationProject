@@ -1,11 +1,11 @@
 import { calendar, calendars } from "../initials/calendarInitials";
 import {
 
-  GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
   GET_LIST_CALENDAR,
+  GET_BY_CALENDAR_ID,
 } from "../actions/calendarActions";
 
 const initialvales = {
@@ -22,7 +22,7 @@ export default function calendarReducer(
         ...state,
         calendars: payload,
       };
-    case GET_BY_ID:
+    case GET_BY_CALENDAR_ID:
       return {
         ...state,
         calendar: payload,

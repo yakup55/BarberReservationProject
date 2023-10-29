@@ -10,10 +10,16 @@ public record UpdateUserRequest(
 		String name,
 		@NotEmpty
 		@Size(min=2,max=30)
-		String surName
+		String surName,
+		@NotEmpty
+		@Size(min=11,max=11)
+		String password,
+		@NotEmpty
+		@Size(min=11,max=11)
+		String phoneNumber
 		) {
 	public Users toEntity() {
-		return new Users(name,surName,null,null);
+		return new Users(name,surName,phoneNumber,password,null);
 	}
 
 }

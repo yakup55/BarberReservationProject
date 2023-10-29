@@ -1,10 +1,12 @@
 import { barber, barbers } from "../initials/barberInitials";
 import {
-  GET_BY_ID,
   ADD,
   DELETE,
   UPDATE,
   GET_LIST_BARBER,
+  GET_BY_BARBER_ID,
+  BARBER_REGISTER,
+  BARBER_LOGIN,
 } from "../actions/barberActions";
 
 const initialvales = {
@@ -18,12 +20,22 @@ export default function barberReducer(state = initialvales, { type, payload }) {
         ...state,
         barbers: payload,
       };
-    case GET_BY_ID:
+    case GET_BY_BARBER_ID:
       return {
         ...state,
         barber: payload,
       };
     case ADD:
+      return {
+        ...state,
+        barbers: [...state.barbers, payload],
+      };
+    case BARBER_REGISTER:
+      return {
+        ...state,
+        barbers: [...state.barbers, payload],
+      };
+    case BARBER_LOGIN:
       return {
         ...state,
         barbers: [...state.barbers, payload],

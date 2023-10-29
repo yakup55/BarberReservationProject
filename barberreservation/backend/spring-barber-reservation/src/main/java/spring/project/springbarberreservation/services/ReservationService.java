@@ -34,6 +34,12 @@ public List<Reservation>getAllReservations(){
 public Reservation getReservationById(Long id) {
 	return reservationRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Id Not Found".formatted(id)));
 }
+public Reservation getUserId(Long userId) {
+	return reservationRepository.findByUserId(userId);
+}
+public Reservation getBarberId(Long barberId) {
+	return reservationRepository.findByBarberId(barberId);
+}
 
 public MessageResponse addReservation(AddReservationRequest reservation) {
 	Barber barber=bService.getBarberById(reservation.getBarberId());

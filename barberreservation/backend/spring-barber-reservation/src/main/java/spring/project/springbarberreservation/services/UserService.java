@@ -22,7 +22,12 @@ public List<Users>getAllUser(){
 public Users getUserById(Long id) {
 	return repository.findById(id).orElseThrow(()->new EntityNotFoundException("Id Not Found".formatted(id)));
 }
-
+public Users getOneUserByUserName(String userName) {
+	return repository.findByUserName(userName);
+}
+public Users getOneByPhoneNumber(String phoneNumber) {
+	return repository.findByPhoneNumber(phoneNumber);
+}
 public MessageResponse addUser(Users user) {
 	repository.save(user);
 	return new MessageResponse("Has been created",MessageType.SUCCESS);

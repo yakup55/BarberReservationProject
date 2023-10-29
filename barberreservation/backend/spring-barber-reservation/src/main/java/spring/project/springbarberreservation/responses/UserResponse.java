@@ -9,9 +9,10 @@ public record UserResponse(
 		String name,
 		String surName,
 		String phoneNumber,
+		String password,
 		LocalDateTime date
 		)  {
 public static UserResponse fromEntity(Users user) {
-	return new UserResponse(user.getId(),user.getName(), user.getSurName(), user.getPhoneNumber(),user.getCreatedDate());
+	return new UserResponse(user.getId(),user.getUserName(), user.getSurName(), user.getPhoneNumber(),user.getPassword(),user.getCreatedDate());
 }
 }
