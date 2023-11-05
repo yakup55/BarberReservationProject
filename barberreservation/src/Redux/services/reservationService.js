@@ -22,6 +22,24 @@ class ReservationService {
     const url = `${this.baseUrl}/barber/${barberId}`;
     return await axios.get(url).then((resp) => resp.data);
   }
+  async getStatusActive(id) {
+    const url = `${this.baseUrl}/active/${id}`;
+    return await axios.get(url).then((resp) => resp.data);
+  }
+  async getStatusPasive(id) {
+    const url = `${this.baseUrl}/pasive/${id}`;
+    return await axios.get(url).then((resp) => resp.data);
+  }
+
+  async check(barberId, hourId, date) {
+    const url = `${this.baseUrl}/check/${barberId}/${hourId}/${date}`;
+    return await axios.get(url).then((resp) =>{
+      return {status:resp.status,data:resp.data};
+  }) 
+  .catch((err) => {
+      return { status: err.response.status };
+    });
+  }
 
   async addReservation(reservation) {
     const url = `${this.baseUrl}/addReservation`;

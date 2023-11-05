@@ -7,7 +7,6 @@ import {
   AlertDialogOverlay,
   Avatar,
   Box,
-  BreadcrumbSeparator,
   Button,
   Card,
   CardBody,
@@ -19,12 +18,10 @@ import {
   Stack,
   StackDivider,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
   Text,
-  Tfoot,
   Th,
   Thead,
   Tr,
@@ -33,17 +30,12 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleted, getUserId } from "../../Redux/actions/reservationActions";
-import { getByBarberId } from "../../Redux/actions/barberActions";
-import { getByCalendarId } from "../../Redux/actions/calendarActions";
-import { getByHourId } from "../../Redux/actions/hourActions";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon, CloseIcon, DeleteIcon } from "@chakra-ui/icons";
 import { userDeleted } from "../../Redux/actions/userActions";
 export default function User() {
   const dispacth = useDispatch();
-  const { reservation } = useSelector((state) => state.reservation);
+  const { reservations } = useSelector((state) => state.reservation);
   const { barber } = useSelector((state) => state.barber);
-  const { calendar } = useSelector((state) => state.calendar);
-  const { hour } = useSelector((state) => state.hour);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const handleDeleted = (id) => {
@@ -53,16 +45,8 @@ export default function User() {
     dispacth(userDeleted(id));
   };
   useEffect(() => {
-    dispacth(getUserId(localStorage.getItem("userId")));
-    dispacth(getByBarberId(reservation?.barberId));
-    dispacth(getByCalendarId(reservation?.calendarId));
-    dispacth(getByHourId(reservation?.hourId));
-  }, [
-    dispacth,
-    reservation?.barberId,
-    reservation?.calendarId,
-    reservation?.hourId,
-  ]);
+    dispacth(getUserId(localStorage.userId));
+  }, [dispacth]);
   return (
     <Grid
       h="300px"
@@ -100,43 +84,10 @@ export default function User() {
                   <Button
                     leftIcon={<DeleteIcon></DeleteIcon>}
                     colorScheme="red"
-                    onClick={onOpen}
+                    onClick={() => handleUserDeleted(barber.id)}
                   >
                     SİL
                   </Button>
-
-                  <AlertDialog
-                    isOpen={isOpen}
-                    leastDestructiveRef={cancelRef}
-                    onClose={onClose}
-                  >
-                    <AlertDialogOverlay>
-                      <AlertDialogContent>
-                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                          Üyelik İptal İşlemi
-                        </AlertDialogHeader>
-
-                        <AlertDialogBody>
-                          Üyeliğinizi İptal Etmek İstediğinize Emin misiniz ?
-                        </AlertDialogBody>
-
-                        <AlertDialogFooter>
-                          <Button ref={cancelRef} onClick={onClose}>
-                            İPTAL
-                          </Button>
-                          <Button
-                            colorScheme="red"
-                            onClick={
-                              onClose && (() => handleUserDeleted(barber.id))
-                            }
-                            ml={3}
-                          >
-                            SİL
-                          </Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialogOverlay>
-                  </AlertDialog>
                 </Text>
               </Box>
             </Stack>
@@ -144,10 +95,10 @@ export default function User() {
         </Card>
       </GridItem>
       <GridItem colSpan={4}>
-        {reservation.length === undefined && (
+        {reservations.length === 0 && (
           <Heading textAlign={"center"}>Randevunuz Bulunmamaktadır</Heading>
         )}
-        {reservation.length !== undefined && (
+        {reservations.length !== 0 && (
           <Container maxW={1000}>
             <Heading
               mb={10}
@@ -165,18 +116,29 @@ export default function User() {
                     <Th>Gün</Th>
                     <Th>Saat</Th>
                     <Th>Açıklama</Th>
+                    <Th>ONAYLANMA DURUMU</Th>
                     <Th>İptal Et</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {reservation.length !== undefined && (
+                  {reservations.map((r) => (
                     <Tr>
                       <Td>
-                        {barber.name} {barber.surName}
+                        {r.barbarName} {r.barberSurName}
                       </Td>
-                      <Td>{calendar?.dates}</Td>
-                      <Td>{hour?.hour}</Td>
-                      <Td>{reservation?.description}</Td>
+                      <Td>{r?.reservationDate}</Td>
+                      <Td>{r?.hour}</Td>
+                      <Td>{r?.description}</Td>
+                      {r?.status === true && (
+                        <Td>
+                          <CheckCircleIcon ml={10}></CheckCircleIcon>
+                        </Td>
+                      )}
+                      {r?.status === false && (
+                        <Td>
+                          <CloseIcon ml={10}></CloseIcon>
+                        </Td>
+                      )}
                       <Td>
                         <Button
                           leftIcon={<DeleteIcon></DeleteIcon>}
@@ -212,8 +174,7 @@ export default function User() {
                                 <Button
                                   colorScheme="red"
                                   onClick={
-                                    onClose &&
-                                    (() => handleDeleted(calendar.id))
+                                    onClose && (() => handleDeleted(r.id))
                                   }
                                   ml={3}
                                 >
@@ -225,7 +186,7 @@ export default function User() {
                         </AlertDialog>
                       </Td>
                     </Tr>
-                  )}
+                  ))}
                 </Tbody>
               </Table>
             </TableContainer>

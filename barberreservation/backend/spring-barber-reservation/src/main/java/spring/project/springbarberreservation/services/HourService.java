@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import spring.project.springbarberreservation.entities.Barber;
 import spring.project.springbarberreservation.entities.Hour;
 import spring.project.springbarberreservation.repositories.HourRepository;
 import spring.project.springbarberreservation.requests.AddHourRequest;
@@ -20,7 +19,6 @@ import spring.project.springbarberreservation.responses.MessageType;
 public class HourService {
 	
 private final HourRepository repository;
-private final  BarberService barberService;
 
 
 public List<Hour> getAllHours(){
@@ -32,11 +30,8 @@ public Hour getHourById(Long id) {
 }
 
 public MessageResponse addHour(AddHourRequest hour) {
-	Barber barber=barberService.getBarberById(hour.getBarberId());
 	Hour newHour=new Hour();
 	newHour.setHour(hour.getHour());
-	newHour.setStatus(hour.getStatus());
-	newHour.setBarber(barber);
 	repository.save(newHour);
 	return new MessageResponse("Has been created",MessageType.SUCCESS);
 }

@@ -7,6 +7,9 @@ import {
   GET_LIST_RESERVATION,
   FIND_BY_USER_ID,
   FIND_BY_BARBER_ID,
+  GET_STATUS_ACTIVE,
+  GET_STATUS_PASIVE,
+  CHECK,
 } from "../actions/reservationActions";
 
 const initialvales = {
@@ -31,13 +34,28 @@ export default function reservationReducer(
     case FIND_BY_USER_ID:
       return {
         ...state,
-        reservation: payload,
+        reservations: payload,
       };
     case FIND_BY_BARBER_ID:
       return {
         ...state,
+        reservations: payload,
+      };
+    case GET_STATUS_ACTIVE:
+      return {
+        ...state,
         reservation: payload,
       };
+    case GET_STATUS_PASIVE:
+      return {
+        ...state,
+        reservation: payload,
+      };
+      case CHECK:
+        return{
+          ...state,
+          reservation:payload,
+        }
     case ADD:
       return {
         ...state,
@@ -56,6 +74,7 @@ export default function reservationReducer(
         ...state,
         reservations: [...state.reservations.filter((x) => x.id !== payload)],
       };
+
     default:
       return {
         ...state,

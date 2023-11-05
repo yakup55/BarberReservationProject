@@ -10,7 +10,7 @@ public record UpdateCalendarRequest  (
 	String dates
 		) {
 	public Calendar toEntity() {
-		return new Calendar(dates, null);
+		return new Calendar(dates);
 	}
 
 }

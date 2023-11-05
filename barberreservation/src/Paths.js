@@ -18,53 +18,75 @@ import List8 from "./Admin/quention/List8";
 import AdminHome from "./Admin/home/AdminHome";
 import User from "./Components/user/User";
 import AdminProfile from "./Admin/home/AdminProfile";
+import Page404 from "./Components/error/Page404";
 
 export default function Paths() {
+
   return (
     <Routes>
       <Route path="/" element={<Home></Home>}></Route>
       <Route path="/login" element={<Login></Login>}></Route>
-      <Route path="/user" element={<User></User>}></Route>
+      {localStorage.isLogin === undefined && (
+        <Route path="*" element={<Page404></Page404>}></Route>
+      )}
+      {localStorage.isBarberLogin === undefined && (
+        <Route path="*" element={<Page404></Page404>}></Route>
+      )}
+      {localStorage.isLogin !== undefined && (
+        <Route path="/user" element={<User></User>}></Route>
+      )}
+      {localStorage.isBarberLogin !== undefined && (
+        <>
+          {/*ADMİN*/}
+          <Route path="/admin" element={<AdminHome></AdminHome>}></Route>
+          <Route
+            path="/adminprofile"
+            element={<AdminProfile></AdminProfile>}
+          ></Route>
+          {/*ADMİN ABOUT*/}
+          <Route path="/admin/aboutslist" element={<List></List>}></Route>
+          <Route
+            path="/admin/aboutupdate/:id"
+            element={<Update></Update>}
+          ></Route>
 
-      {/*ADMİN*/}
-      <Route path="/admin" element={<AdminHome></AdminHome>}></Route>
-      <Route
-        path="/adminprofile"
-        element={<AdminProfile></AdminProfile>}
-      ></Route>
+          {/*ADMİN HOUR*/}
+          <Route path="/admin/hourslist" element={<List4></List4>}></Route>
+          <Route
+            path="/admin/hourupdate/:id"
+            element={<Update4></Update4>}
+          ></Route>
+          {/*ADMİN RESERVATION*/}
+          <Route
+            path="/admin/reservationslist"
+            element={<List5></List5>}
+          ></Route>
+          {/*ADMİN USER*/}
+          <Route path="/admin/userslist" element={<List6></List6>}></Route>
+          {/*ADMİN BARBER*/}
+          <Route path="/admin/barberslist" element={<List2></List2>}></Route>
+          <Route
+            path="/admin/barberupdate/:id"
+            element={<Update2></Update2>}
+          ></Route>
+          {/*ADMİN CALENDAR*/}
+          <Route path="/admin/calendarslist" element={<List3></List3>}></Route>
+          <Route
+            path="/admin/calendarupdate/:id"
+            element={<Update3></Update3>}
+          ></Route>
+          {/*ADMİN CONTACT*/}
+          <Route path="/admin/contactslist" element={<List7></List7>}></Route>
 
-      {/*ADMİN ABOUT*/}
-      <Route path="/admin/aboutslist" element={<List></List>}></Route>
-      <Route path="/admin/aboutupdate/:id" element={<Update></Update>}></Route>
-
-      {/*ADMİN HOUR*/}
-      <Route path="/admin/hourslist" element={<List4></List4>}></Route>
-      <Route path="/admin/hourupdate/:id" element={<Update4></Update4>}></Route>
-      {/*ADMİN RESERVATION*/}
-      <Route path="/admin/reservationslist" element={<List5></List5>}></Route>
-      {/*ADMİN USER*/}
-      <Route path="/admin/userslist" element={<List6></List6>}></Route>
-      {/*ADMİN BARBER*/}
-      <Route path="/admin/barberslist" element={<List2></List2>}></Route>
-      <Route
-        path="/admin/barberupdate/:id"
-        element={<Update2></Update2>}
-      ></Route>
-      {/*ADMİN CALENDAR*/}
-      <Route path="/admin/calendarslist" element={<List3></List3>}></Route>
-      <Route
-        path="/admin/calendarupdate/:id"
-        element={<Update3></Update3>}
-      ></Route>
-      {/*ADMİN CONTACT*/}
-      <Route path="/admin/contactslist" element={<List7></List7>}></Route>
-
-      {/*ADMİN QUENTİON*/}
-      <Route path="/admin/quentionslist" element={<List8></List8>}></Route>
-      <Route
-        path="/admin/quentionupdate/:id"
-        element={<Update8></Update8>}
-      ></Route>
+          {/*ADMİN QUENTİON*/}
+          <Route path="/admin/quentionslist" element={<List8></List8>}></Route>
+          <Route
+            path="/admin/quentionupdate/:id"
+            element={<Update8></Update8>}
+          ></Route>
+        </>
+      )}
+    
     </Routes>
   );
 }

@@ -9,7 +9,4 @@ public class AddHourRequest
 		{
 			@NotEmpty
 			String hour;
-			Boolean status;
-			Long  barberId;
-			
 }

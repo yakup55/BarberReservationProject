@@ -1,5 +1,7 @@
 package spring.project.springbarberreservation.entities;
 
+import java.time.LocalDate;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,19 +28,11 @@ public class Reservation extends BaseEntity{
 	@JsonIgnore
 	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Barber barber;
-	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="hour_id")
 	@JsonIgnore
 	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Hour hour;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="calendar_id")
-	@JsonIgnore
-	@OnDelete(action=OnDeleteAction.CASCADE)
-	private Calendar calendar;
-	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	@JsonIgnore
@@ -44,17 +40,22 @@ public class Reservation extends BaseEntity{
 	private Users user;
 	
 	private String description;
-
-	public Reservation(Barber barber, Hour hour,Calendar calendar,Users user, String description) {
+	private Boolean status;
+	
+	@Temporal(TemporalType.DATE)
+	private LocalDate date;
+	public Reservation(Barber barber, Hour hour,Users user, String description,Boolean status,LocalDate date) {
 		super();
 		this.barber = barber;
 		this.hour = hour;
-		this.calendar=calendar;
 		this.user=user;
 		this.description = description;
+		this.status=status;
+		this.date=date;
 	}
 	
 	public void update(UpdateReservationRequest newReservation) {
 		this.description=newReservation.getDescription();
 	}
+	
 }

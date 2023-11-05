@@ -22,14 +22,12 @@ import jakarta.validation.Valid;
 
 import spring.project.springbarberreservation.entities.Barber;
 import spring.project.springbarberreservation.entities.RefreshToken;
-import spring.project.springbarberreservation.entities.Users;
 import spring.project.springbarberreservation.requests.AddBarberRequest;
 
 import spring.project.springbarberreservation.requests.AdminRequest;
 import spring.project.springbarberreservation.requests.RefreshRequest;
 import spring.project.springbarberreservation.requests.UpdateBarberRequest;
 import spring.project.springbarberreservation.responses.AdminResponse;
-import spring.project.springbarberreservation.responses.AuthResponse;
 import spring.project.springbarberreservation.responses.BarberResponse;
 import spring.project.springbarberreservation.responses.MessageResponse;
 import spring.project.springbarberreservation.security.JwtTokenProvider;

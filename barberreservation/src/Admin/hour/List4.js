@@ -21,7 +21,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleted, getList4 } from "../../Redux/actions/hourActions";
-import { CheckCircleIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import Add4 from "./Add4";
 
 export default function List4() {
@@ -41,15 +41,12 @@ export default function List4() {
       <TableContainer>
         <Table variant="simple">
           <TableCaption>
-            {" "}
             <Add4>EKLE</Add4>
           </TableCaption>
           <Thead>
             <Tr>
               <Th>#</Th>
               <Th>SAATLER</Th>
-              <Th>BERBERCİ</Th>
-              <Th>ONAYLANMA DURUMU</Th>
               <Th>KAYIT TARİHİ</Th>
               <Th>GÜNCELLE</Th>
               <Th>SİL</Th>
@@ -60,21 +57,6 @@ export default function List4() {
               <Tr>
                 <Td>{hour.id}</Td>
                 <Td>{hour.hour}</Td>
-                <Td>{hour.barberId}</Td>
-                {
-hour.status===true&&(
-                <Td>
-  <CheckCircleIcon></CheckCircleIcon>
-                </Td>
-                )
-              }
-                    {
-hour.status===false&&(
-                <Td>
-  <CloseIcon></CloseIcon>
-                </Td>
-                )
-              }
                 <Td>{hour.date}</Td>
                 <Td>
                   <Button
@@ -86,7 +68,7 @@ hour.status===false&&(
                   </Button>
                 </Td>
                 <Td>
-                <Button
+                  <Button
                     leftIcon={<DeleteIcon></DeleteIcon>}
                     colorScheme="red"
                     onClick={onOpen}
@@ -115,9 +97,7 @@ hour.status===false&&(
                           </Button>
                           <Button
                             colorScheme="red"
-                            onClick={
-                              onClose && (() => handleDeleted(hour.id))
-                            }
+                            onClick={onClose && (() => handleDeleted(hour.id))}
                             ml={3}
                           >
                             SİL

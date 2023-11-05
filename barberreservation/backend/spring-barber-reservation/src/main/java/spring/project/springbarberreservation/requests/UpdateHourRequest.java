@@ -8,6 +8,4 @@ import lombok.Data;
 public class UpdateHourRequest{
 	@NotEmpty
 	String hour;
-	Boolean status;
-	Long  barberId;
 }

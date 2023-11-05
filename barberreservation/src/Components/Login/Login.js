@@ -80,7 +80,6 @@ export default function Login() {
     },
     validationSchema
   );
-  console.log(localStorage);
   return (
     <>
       <Button colorScheme="teal" onClick={onOpen}>

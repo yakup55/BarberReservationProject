@@ -3,9 +3,11 @@ import {
   Button,
   Container,
   Heading,
+  Input,
   Select,
   SimpleGrid,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,29 +16,53 @@ import { add } from "../../Redux/actions/reservationActions";
 import { validationSchema } from "../../Admin/reservation/validationSchema";
 import { getList2 } from "../../Redux/actions/barberActions";
 import { getList4 } from "../../Redux/actions/hourActions";
-import { getList3 } from "../../Redux/actions/calendarActions";
+import ReservationService from "../../Redux/services/reservationService";
+import { openSnacbar } from "../../Redux/actions/appActions";
 export default function Reservation() {
   const dispacth = useDispatch();
+  const service = new ReservationService();
   const { barbers } = useSelector((state) => state.barber);
   const { hours } = useSelector((state) => state.hour);
-  const { calendars } = useSelector((state) => state.calendar);
+  const toast = useToast();
+
+  const { snacbar } = useSelector((state) => state.app);
   const { handleSubmit, handleChange, errors, touched, values, handleBlur } =
     useFormik({
       initialValues: {
         barberId: 0,
         hourId: 0,
-        calendarId: 0,
-        userId: localStorage.getItem("userId"),
+        userId: localStorage.userId,
         description: "",
+        status: false,
+        date: "",
       },
-      onSubmit: (values) => {
-        dispacth(add(values));
+      onSubmit: async (values) => {
+        const result = await service.check(
+          values.barberId,
+          values.hourId,
+          values.date
+        );
+        if (result.status === 200) {
+          dispacth(
+            openSnacbar({
+              message: `Bu berberin bu günde ve saattte randevusu vardır`,
+              severity: "error",
+            })
+          );
+        } else if (result.status === 404) {
+          dispacth(add(values));
+          dispacth(
+            openSnacbar({
+              message: "Randevunuz başarılı bir şekilde oluşturulmuştur",
+              severity: "success",
+            })
+          );
+        }
       },
       validationSchema,
     });
   useEffect(() => {
     dispacth(getList2());
-    dispacth(getList3());
     dispacth(getList4());
   }, [dispacth]);
 
@@ -48,26 +74,17 @@ export default function Reservation() {
       <form onSubmit={handleSubmit}>
         <SimpleGrid columns={1} spacingX="20px" spacingY="20px">
           <Box height="60px">
-            <Select
-              value={values.calendarId}
-              id="calendarId"
-              name="calendarId"
+            <Input
+              id="date"
+              name="date"
               onChange={handleChange}
               onBlur={handleBlur}
-              error={errors?.calendarId && touched?.calendarId}
-              helperText={
-                errors?.calendarId && touched?.calendarId
-                  ? errors?.calendarId
-                  : ""
-              }
-              placeholder="Gün Seçiniz"
-            >
-              {calendars.map((calendar) => (
-                <option key={calendar?.id} value={calendar?.id}>
-                  {calendar?.dates}
-                </option>
-              ))}
-            </Select>
+              error={errors.date && touched.date}
+              helperText={errors.date && touched.date ? errors.date : ""}
+              placeholder="Tarih Seçiniz"
+              size="md"
+              type="date"
+            />
           </Box>
           <Box height="60px">
             <Select
@@ -123,7 +140,18 @@ export default function Reservation() {
             />
           </Box>
           <Box height="60px">
-            <Button type="submit" alignItems="center">
+            <Button
+              type="submit"
+              onClick={() =>
+                toast({
+                  title: `${snacbar.severity}`,
+                  description: `${snacbar.message}`,
+                  status: `${snacbar.severity}`,
+                  duration: 5000,
+                  isClosable: true,
+                })
+              }
+            >
               Randevu Al
             </Button>
           </Box>

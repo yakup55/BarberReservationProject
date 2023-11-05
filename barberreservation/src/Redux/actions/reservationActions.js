@@ -7,6 +7,9 @@ export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
 export const FIND_BY_USER_ID = "FIND_BY_USER_ID";
 export const FIND_BY_BARBER_ID = "FIND_BY_BARBER_ID";
+export const GET_STATUS_ACTIVE = "GET_STATUS_ACTIVE";
+export const GET_STATUS_PASIVE = "GET_STATUS_PASIVE";
+export const CHECK = "CHECK";
 const service = new ReservationService();
 
 export function getList5() {
@@ -35,6 +38,27 @@ export function getBarberId(barberId) {
     service
       .getBarberId(barberId)
       .then((resp) => dispacth({ type: FIND_BY_BARBER_ID, payload: resp }));
+  };
+}
+export function reservationActive(id) {
+  return function (dispacth) {
+    service
+      .getStatusActive(id)
+      .then((resp) => dispacth({ type: GET_STATUS_ACTIVE, payload: resp }));
+  };
+}
+export function reservationPasive(id) {
+  return function (dispacth) {
+    service
+      .getStatusPasive(id)
+      .then((resp) => dispacth({ type: GET_STATUS_PASIVE, payload: resp }));
+  };
+}
+export function check(barberId, horuId, date) {
+  return function (dispacth) {
+    service
+      .check(barberId, horuId, date)
+      .then((resp) => dispacth({ type: CHECK, payload: resp }));
   };
 }
 export function add(reservation) {

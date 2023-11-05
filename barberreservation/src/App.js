@@ -1,7 +1,6 @@
 import Navbar from "./Components/Navbar/Navbar";
 import ScrollToTop from "./Components/scrolToTop/ScrollToTop";
 
-import SimpleSnacbar from "./Components/snacbar/SimpleSnacbar";
 
 import Paths from "./Paths";
 
@@ -15,7 +14,6 @@ function App() {
           <Paths />
         </main>
       </div>
-     
     </>
   );
 }

@@ -18,7 +18,6 @@ import { useDispatch } from "react-redux";
 import { register } from "../../Redux/actions/authActions";
 import { validationSchema } from "../../Admin/user/validationSchema";
 import { openSnacbar } from "../../Redux/actions/appActions";
-import SimpleSnacbar from "../snacbar/SimpleSnacbar";
 
 export default function SignUp() {
   const { isOpen, onOpen, onClose } = useDisclosure();

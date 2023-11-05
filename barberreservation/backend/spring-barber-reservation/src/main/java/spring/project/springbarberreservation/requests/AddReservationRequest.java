@@ -1,5 +1,7 @@
 package spring.project.springbarberreservation.requests;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -9,9 +11,10 @@ import lombok.Data;
 public class AddReservationRequest {
 	Long barberId;
 	Long hourId;
-	Long calendarId;
 	Long userId;
 	@NotEmpty
 	@Size(min=5)
 	String description;
+	 Boolean status;
+	 LocalDate date;
 }
