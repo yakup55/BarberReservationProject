@@ -8,6 +8,7 @@ import quentionReducer from "./quentionsReducer";
 import contactReducer from "./contactReducer";
 import { appReducer } from "./appReducer";
 import authReducer from "./authReducer";
+import imageReducer from "./imageReducer";
 const { combineReducers } = require("redux");
 
 const rootReducer = combineReducers({
@@ -21,5 +22,6 @@ const rootReducer = combineReducers({
   quention: quentionReducer,
   app: appReducer,
   auth: authReducer,
+  image: imageReducer,
 });
 export default rootReducer;

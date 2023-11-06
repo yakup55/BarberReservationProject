@@ -1,4 +1,4 @@
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 
 export const validationSchema = object({
   userName: string()
@@ -16,7 +16,7 @@ export const validationSchema = object({
   experience: string()
     .required("Zorunlu Alan")
     .max(30, "En fazla 30 karakter olmalı"),
-  iamge: string()
+  imageId: number()
     .required("Zorunlu Alan")
     .min(2, "En az 2 karakter olmalı")
     .max(500, "En fazla 500 karakter olmalı"),

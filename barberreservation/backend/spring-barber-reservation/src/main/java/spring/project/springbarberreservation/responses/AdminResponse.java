@@ -10,7 +10,7 @@ public class AdminResponse {
 	String userName;
 	String surName;
 	String phoneNumber;
-	 String image;
+	 Long imageId;
 	 String expriences;
 	 String message;
 }

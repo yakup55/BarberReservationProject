@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import spring.project.springbarberreservation.entities.Barber;
 
 import spring.project.springbarberreservation.repositories.BarberRepository;
+import spring.project.springbarberreservation.requests.UpdateBarberRequest;
 import spring.project.springbarberreservation.responses.MessageResponse;
 import spring.project.springbarberreservation.responses.MessageType;
 
@@ -18,7 +19,6 @@ import spring.project.springbarberreservation.responses.MessageType;
 public class BarberService {
 
 	private final BarberRepository repository;
-	
 	
 	public List<Barber> getAllBarber(){
 		return repository.findAll();
@@ -41,7 +41,7 @@ public class BarberService {
 	}
 
 	@Transactional
-	public MessageResponse updateBarber(Long id,Barber barber) {
+	public MessageResponse updateBarber(Long id,UpdateBarberRequest barber) {
 		Barber existingBarber=getBarberById(id);
 existingBarber.update(barber);
 repository.save(existingBarber);

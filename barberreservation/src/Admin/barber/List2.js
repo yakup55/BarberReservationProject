@@ -51,7 +51,6 @@ export default function List2() {
               <Th>BERBER SOY İSMİ</Th>
               <Th>TELEFON NumaraSI</Th>
               <Th>KAÇ YIL DENEYİMLİ</Th>
-              <Th>RESMİ</Th>
               <Th>KAYIT TARİHİ</Th>
               <Th>GÜNCELLE</Th>
               <Th>SİL</Th>
@@ -65,14 +64,6 @@ export default function List2() {
                 <Td>{barber.surName}</Td>
                 <Td>{barber.phoneNumber}</Td>
                 <Td>{barber.experience}</Td>
-                <Td>
-                  <Image
-                    boxSize="80px"
-                    objectFit="cover"
-                    src={`${barber.image}`}
-                    alt={barber.userName}
-                  />
-                </Td>
                 <Td>{barber.date}</Td>
                 <Td>
                   <Button

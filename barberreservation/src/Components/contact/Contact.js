@@ -28,12 +28,11 @@ export default function Contact() {
             İletişim Yap
           </Heading>
           <Input
+            aria-errormessage={errors.name && touched.name}
             id="name"
             name="name"
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.name && touched.name}
-            helperText={errors.name && touched.name ? errors.name : ""}
             variant="outline"
             placeholder="Adınızı Giriniz"
           />
@@ -65,7 +64,12 @@ export default function Contact() {
             variant="outline"
             placeholder="Açıklama  Giriniz"
           />
-          <Button width={100}  alignItems="center" colorScheme="whatsapp" type="submit">
+          <Button
+            width={100}
+            alignItems="center"
+            colorScheme="whatsapp"
+            type="submit"
+          >
             Gönder
           </Button>
         </Stack>

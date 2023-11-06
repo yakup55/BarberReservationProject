@@ -1,11 +1,21 @@
 package spring.project.springbarberreservation.entities;
 
 import java.util.List;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import spring.project.springbarberreservation.requests.UpdateBarberRequest;
 
 @Entity
 @NoArgsConstructor
@@ -15,30 +25,37 @@ public class Barber extends BaseEntity {
 private String userName;
 private String surName;
 private String phoneNumber;
-private String image;
 private String expriences;
 private String password;
+
+
+@ManyToOne(fetch=FetchType.LAZY)
+@JoinColumn(name="image_id")
+@JsonIgnore
+@OnDelete(action=OnDeleteAction.CASCADE)
+private Image image;
 
 @OneToMany(mappedBy = "barber")
 private List<Reservation>reservations;
 
-public void update(Barber newBarber) {
+
+
+public void update(UpdateBarberRequest newBarber) {
 	this.userName=newBarber.getUserName();
 	this.surName=newBarber.getSurName();
-	this.expriences=newBarber.getExpriences();
-	this.image=newBarber.getImage();
-	this.password=newBarber.getPassword();
+	this.expriences=newBarber.getExperience();
+	this.phoneNumber=newBarber.getPhoneNumber();
 }
 
-public Barber(String name, String surName, String phoneNumber, String image, String expriences,
-		List<Reservation> reservations,String password) {
+public Barber(String name, String surName, String phoneNumber, String expriences,
+		List<Reservation> reservations,Image image,String password) {
 	super();
 	this.userName = name;
 	this.surName = surName;
 	this.phoneNumber = phoneNumber;
-	this.image = image;
 	this.expriences = expriences;
 	this.reservations = reservations;
+	this.image=image;
 	this.password=password;
 }
 

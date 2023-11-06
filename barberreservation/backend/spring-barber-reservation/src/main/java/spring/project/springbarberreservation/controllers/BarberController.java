@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 import spring.project.springbarberreservation.entities.Barber;
+import spring.project.springbarberreservation.entities.Image;
 import spring.project.springbarberreservation.entities.RefreshToken;
 import spring.project.springbarberreservation.requests.AddBarberRequest;
 
@@ -32,6 +33,7 @@ import spring.project.springbarberreservation.responses.BarberResponse;
 import spring.project.springbarberreservation.responses.MessageResponse;
 import spring.project.springbarberreservation.security.JwtTokenProvider;
 import spring.project.springbarberreservation.services.BarberService;
+import spring.project.springbarberreservation.services.ImageService;
 import spring.project.springbarberreservation.services.RefreshTokenService;
 
 @RestController
@@ -42,16 +44,19 @@ public class BarberController {
 	private final BarberService service;
 	private RefreshTokenService refreshTokenService;
 	private JwtTokenProvider jwtTokenProvider;
-
+    private final ImageService imageService;
+	
 	
 	public BarberController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-			BarberService service, RefreshTokenService refreshTokenService, JwtTokenProvider jwtTokenProvider) {
+			BarberService service, RefreshTokenService refreshTokenService, JwtTokenProvider jwtTokenProvider,
+			ImageService imageService) {
 		super();
 		this.authenticationManager = authenticationManager;
 		this.passwordEncoder = passwordEncoder;
 		this.service = service;
 		this.refreshTokenService = refreshTokenService;
 		this.jwtTokenProvider = jwtTokenProvider;
+		this.imageService = imageService;
 	}
 	@GetMapping("/{id}")
 	public BarberResponse getBarberById(@PathVariable Long id) {
@@ -61,13 +66,10 @@ public class BarberController {
 	public List<BarberResponse> getAllBarbers() {
 		return service.getAllBarber().stream().map(BarberResponse::fromEntity).toList();
 }
-		@PostMapping("/{addBarber}")
-	public MessageResponse addBarber(@RequestBody @Valid AddBarberRequest addBarberRequest) {
-		return service.addBarber(addBarberRequest.toEntity());
-	}
+
 	@PutMapping("/{id}")
 	public MessageResponse updateBarber(@PathVariable Long id,@RequestBody @Valid UpdateBarberRequest updateBarberRequest) {
-		return service.updateBarber(id, updateBarberRequest.toEntity());
+		return service.updateBarber(id, updateBarberRequest);
 	}
 	@DeleteMapping("/{id}")
 	public MessageResponse deleteBarber(@PathVariable Long id) {
@@ -88,8 +90,8 @@ public class BarberController {
 		admin.setUserName(barber.getUserName());
 		admin.setSurName(barber.getSurName());
 		admin.setPhoneNumber(barber.getPhoneNumber());
-		admin.setImage(barber.getImage());
 		admin.setExpriences(barber.getExpriences());
+		admin.setImageId(barber.getImage().getId());
 		return admin;
 	}
 
@@ -106,13 +108,13 @@ public class BarberController {
 			admin.setMessage("PhoneNumber already in use.");
 			return new ResponseEntity<>(admin, HttpStatus.BAD_REQUEST);
 		}
-		
+		Image image=imageService.getImageById(addBarber.getImageId());
 		Barber barber = new Barber();
 		barber.setUserName(addBarber.getUserName());
 		barber.setSurName(addBarber.getSurName());
 		barber.setPhoneNumber(addBarber.getPhoneNumber());
 		barber.setExpriences(addBarber.getExperience());
-		barber.setImage(addBarber.getImage());
+		barber.setImage(image);
 		barber.setPassword(passwordEncoder.encode(addBarber.getPassword()));
 		service.addBarber(barber);
 		

@@ -1,8 +1,12 @@
 import { AddIcon } from "@chakra-ui/icons";
 import {
+  Avatar,
+  Box,
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
+  HStack,
   Input,
   Modal,
   ModalBody,
@@ -11,51 +15,62 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Radio,
+  RadioGroup,
   Select,
+  SimpleGrid,
+  Stack,
+  Wrap,
+  WrapItem,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { add } from "../../Redux/actions/barberActions";
 import { validationSchema } from "./validationSchema";
+import { getImagesList } from "../../Redux/actions/imageActions";
+import { openSnacbar } from "../../Redux/actions/appActions";
+import { barberRegister } from "../../Redux/actions/barberActions";
 export default function Add2() {
-  const [previewUrl, setPreviewUrl] = useState(null);
-
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    const imageUrl = URL.createObjectURL(selectedFile);
-    console.log(selectedFile);
-    // Resmi göster
-    setPreviewUrl(imageUrl);
-    handleChange(event);
-  };
-
+  const { images } = useSelector((state) => state.image);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const navigate = useNavigate();
   const dispacth = useDispatch();
-  const { handleSubmit, handleBlur, handleChange, errors, touched } = useFormik(
-    {
-      initialValues: {
-        userName: "",
-        surName: "",
-        phoneNumber: "",
-        experience: "",
-        image: null,
-        password: "",
+  const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
+    useFormik(
+      {
+        initialValues: {
+          userName: "",
+          surName: "",
+          phoneNumber: "",
+          experience: "",
+          imageId: 0,
+          password: "",
+        },
+        onSubmit: (values) => {
+          dispacth(barberRegister(values));
+          dispacth(
+            openSnacbar({
+              message: "Berber Eklendi",
+              severity: "Success",
+            })
+          );
+          navigate("/admin/barberslist");
+          onClose(onClose);
+        },
       },
-      onSubmit: (values) => {
-        dispacth(add(values));
-        navigate("/admin/barberslist");
-        onClose(onClose);
-      },
-    },
-    validationSchema
-  );
+      validationSchema
+    );
+  useEffect(() => {
+    dispacth(getImagesList());
+  }, [dispacth]);
+  const toast = useToast();
 
+  const { snacbar } = useSelector((state) => state.app);
   return (
     <>
       <Button
@@ -143,21 +158,38 @@ export default function Add2() {
                   placeholder="Kaç Yıl Deneyimlisiniz"
                 />
               </FormControl>
-              <FormControl mt={4}>
-                <FormLabel>Resim Giriniz</FormLabel>
-                <Input
-                  id="image"
-                  name="image"
-                  type="file"
-                  onChange={handleFileChange}
-                  onBlur={handleBlur}
-                  error={errors.image && touched.image}
-                  helperText={errors.image && touched.image ? errors.image : ""}
-                  ref={initialRef}
-                  placeholder="Resim Giriniz"
-                />
-                {previewUrl && <img src={previewUrl} alt="Seçilen Resim" />}
+              <FormControl as="fieldset">
+                <FormLabel as="legend">Avatar Seçiniz</FormLabel>
+
+                <RadioGroup defaultValue="Itachi">
+                  <HStack spacing="30px">
+                    <SimpleGrid mt={2} mb={6} columns={0} spacing={10}>
+                      <Box height="80px">
+                        {images.map((image) => (
+                          <Radio
+                            id="imageId"
+                            name="imageId"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={errors.imageId && touched.imageId}
+                            helperText={
+                              errors.imageId && touched.imageId
+                                ? errors.imageId
+                                : ""
+                            }
+                            ref={initialRef}
+                            key={image.id}
+                            value={image.id}
+                          >
+                            <Avatar src={`${image.imageUrl}`}></Avatar>
+                          </Radio>
+                        ))}
+                      </Box>
+                    </SimpleGrid>
+                  </HStack>
+                </RadioGroup>
               </FormControl>
+
               <FormControl mt={4}>
                 <FormLabel>Şifrenizi Giriniz</FormLabel>
                 <Input
@@ -176,7 +208,18 @@ export default function Add2() {
             </ModalBody>
 
             <ModalFooter>
-              <Button type="submit" colorScheme="blue" mr={3}>
+              <Button
+                type="submit"
+                onClick={() =>
+                  toast({
+                    title: `${snacbar.severity}`,
+                    description: `${snacbar.message}`,
+                    status: `${snacbar.severity}`,
+                    duration: 5000,
+                    isClosable: true,
+                  })
+                }
+              >
                 Ekle
               </Button>
               <Button onClick={onClose}>İptal</Button>
