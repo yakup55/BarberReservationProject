@@ -38,7 +38,7 @@ public MessageResponse updateQuentions(Long id,Quentions quentions) {
 	newQuention.update(quentions);
 	quentionsRepository.save(newQuention);
 	
-	return new MessageResponse("Has been created",MessageType.SUCCESS);
+	return new MessageResponse("Has been updated",MessageType.SUCCESS);
 }
 
 public MessageResponse deleteQuention(Long id) {

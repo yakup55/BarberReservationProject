@@ -7,6 +7,7 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import spring.project.springbarberreservation.requests.UpdateUserRequest;
 @Entity
 @NoArgsConstructor
 @Getter
@@ -21,9 +22,8 @@ public class Users extends BaseEntity {
 	
 
 	
-	public void update(Users user) {
-		this.userName=user.userName;
-		this.surName=user.surName;
+	public void update(UpdateUserRequest user) {
+		this.surName=user.getSurName();
 	}
 
 

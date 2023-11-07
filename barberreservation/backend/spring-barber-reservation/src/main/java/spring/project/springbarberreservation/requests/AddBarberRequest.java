@@ -3,8 +3,6 @@ package spring.project.springbarberreservation.requests;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import spring.project.springbarberreservation.entities.About;
-import spring.project.springbarberreservation.entities.Barber;
 
 @Data
 public class AddBarberRequest  {

@@ -17,7 +17,7 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import SignUp from "../SignUp/SignUp";
-import { CalendarIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { CalendarIcon, EditIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Login from "../Login/Login";
 import UpdatePassword from "../user/UpdatePassword";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -105,8 +105,17 @@ function Navbar() {
                   >
                     Ana Sayfa
                   </MenuItem>
-                  <MenuItem >
+                  <MenuItem>
                     <UpdatePassword></UpdatePassword>{" "}
+                  </MenuItem>
+                  <MenuItem
+                    ml={1}
+                    onClick={() =>
+                      navigate(`/userupdate/${localStorage.userId}`)
+                    }
+                    icon={<EditIcon></EditIcon>}
+                  >
+                    Bilgilerimi Güncelle
                   </MenuItem>
                 </MenuGroup>
                 <MenuDivider />
@@ -150,11 +159,20 @@ function Navbar() {
                     Ana Sayfa
                   </MenuItem>
                   <MenuItem
-                  ml={1}
+                    ml={1}
                     onClick={() => navigate("/adminprofile")}
                     icon={<CalendarIcon></CalendarIcon>}
                   >
                     Randevularım
+                  </MenuItem>
+                  <MenuItem
+                    ml={1}
+                    onClick={() =>
+                      navigate(`/adminupdate/${localStorage.barberId}`)
+                    }
+                    icon={<EditIcon></EditIcon>}
+                  >
+                    Bilgilerimi Güncelle
                   </MenuItem>
                 </MenuGroup>
                 <MenuDivider />

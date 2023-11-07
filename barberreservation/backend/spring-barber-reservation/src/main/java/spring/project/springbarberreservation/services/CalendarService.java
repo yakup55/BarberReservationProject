@@ -33,7 +33,7 @@ public class CalendarService {
 	public MessageResponse updateCalendar(Long id,Calendar calendar) {
 		Calendar newCalendar=getCalendarById(id);
 		if(!repository.existsById(id)) {
-			return new MessageResponse("Quention cant be found", MessageType.ERROR);
+			return new MessageResponse("Calendar cant be found", MessageType.ERROR);
 		}
 		newCalendar.update(calendar);
 		repository.save(newCalendar);

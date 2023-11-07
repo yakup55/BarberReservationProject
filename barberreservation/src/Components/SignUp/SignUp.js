@@ -3,6 +3,8 @@ import {
   FormControl,
   FormLabel,
   Input,
+  InputGroup,
+  InputLeftAddon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,40 +13,72 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { register } from "../../Redux/actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
 import { validationSchema } from "../../Admin/user/validationSchema";
 import { openSnacbar } from "../../Redux/actions/appActions";
+import { getList6 } from "../../Redux/actions/userActions";
+import AuthService from "../../Redux/services/authService";
 
 export default function SignUp() {
+  const toast = useToast();
+  const { snacbar } = useSelector((state) => state.app);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const dispacth = useDispatch();
-  const { handleSubmit, handleBlur, handleChange, errors, touched } = useFormik(
-    {
-      initialValues: {
-        userName: "",
-        surName: "",
-        phoneNumber: "",
-        password: "",
-      },
-      onSubmit: (values) => {
-        dispacth(register(values));
+  const { users } = useSelector((state) => state.user);
+  const service = new AuthService();
+  const { handleSubmit, handleBlur, handleChange } = useFormik({
+    initialValues: {
+      userName: "",
+      surName: "",
+      phoneNumber: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      const result = await service.register(values);
+
+      if (users.find((x) => x.phoneNumber === values.phoneNumber)) {
         dispacth(
           openSnacbar({
-            message: "Has been created",
+            message: `Bu Telefon Numarası Kayıtlıdır`,
+            severity: "error",
+          })
+        );
+      } else if (users.find((x) => x.name === values.userName)) {
+        dispacth(
+          openSnacbar({
+            message: `Bu Kullanıcı Adı Daha Önce Kullanılmış`,
+            severity: "error",
+          })
+        );
+      } else if (result.status === 400) {
+        dispacth(
+          openSnacbar({
+            message: `Kayıtda Bir Hata Oldu`,
+            severity: "error",
+          })
+        );
+      } else if (result.status === 201) {
+        dispacth(
+          openSnacbar({
+            message: `Kaydınız Alınmıştır Lütfen Mail Doğrulaması İçin Maillerinizi Kontrol Ediniz`,
             severity: "success",
           })
         );
-        //navigate("/admin/barberslist");
-      },
+      }
     },
-    validationSchema
-  );
+    validationSchema,
+  });
+
+  useEffect(() => {
+    dispacth(getList6());
+  }, [dispacth]);
+
   return (
     <>
       <Button colorScheme="teal" onClick={onOpen}>
@@ -66,15 +100,11 @@ export default function SignUp() {
               <FormControl>
                 <FormLabel>Adınız</FormLabel>
                 <Input
+                  type="text"
                   id="userName"
                   name="userName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.userName && touched.userName}
-                  helperText={
-                    errors.userName && touched.userName ? errors.userName : ""
-                  }
-                  ref={initialRef}
                   placeholder="Adınızı Giriniz"
                 />
               </FormControl>
@@ -82,54 +112,56 @@ export default function SignUp() {
               <FormControl mt={4}>
                 <FormLabel>Soy Adınız</FormLabel>
                 <Input
+                  type="text"
                   id="surName"
                   name="surName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.surName && touched.surName}
-                  helperText={
-                    errors.surName && touched.surName ? errors.surName : ""
-                  }
-                  ref={initialRef}
                   placeholder="Soy Adınız Giriniz"
                 />
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Telefon Numaranız</FormLabel>
-                <Input
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.phoneNumber && touched.phoneNumber}
-                  helperText={
-                    errors.phoneNumber && touched.phoneNumber
-                      ? errors.phoneNumber
-                      : ""
-                  }
-                  ref={initialRef}
-                  placeholder="Telefon Numaranızı Giriniz"
-                />
+                <InputGroup>
+                  <InputLeftAddon children="+90" />
+                  <Input
+                    type="number"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Telefon Numaranızı Giriniz"
+                  />
+                </InputGroup>
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Şifre Giriniz</FormLabel>
                 <Input
+                  type="password"
                   id="password"
                   name="password"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.password && touched.password}
-                  helperText={
-                    errors.password && touched.password ? errors.password : ""
-                  }
-                  ref={initialRef}
                   placeholder="Şifre  Giriniz"
                 />
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
-              <Button type="submit" colorScheme="blue" mr={3}>
+              <Button
+                type="submit"
+                colorScheme="blue"
+                onClick={() =>
+                  toast({
+                    title: `${snacbar.severity}`,
+                    description: `${snacbar.message}`,
+                    status: `${snacbar.severity}`,
+                    duration: 5000,
+                    isClosable: true,
+                  })
+                }
+                mr={3}
+              >
                 Kayıt Ol
               </Button>
               <Button onClick={onClose}>İptal</Button>

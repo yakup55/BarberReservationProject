@@ -8,17 +8,11 @@ import lombok.Data;
 @Data
 public class UpdateBarberRequest {
 		@NotEmpty
-		@Size(min=2,max=20)
-		String userName;
-		@NotEmpty
 		@Size(min=2,max=30)
 		String surName;
 		@NotEmpty
-		@Size(min=11,max=11)
-		String phoneNumber;
 		@NotEmpty
 		@Size(max=30)
 		String experience;
-		
 
 }

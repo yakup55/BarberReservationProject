@@ -29,10 +29,10 @@ export function add(hour) {
       .then((resp) => dispacth({ type: ADD, payload: resp }));
   };
 }
-export function update(hour) {
+export function update(id,hour) {
   return function (dispacth) {
     service
-      .updateHour(hour)
+      .updateHour(id,hour)
       .then((resp) => dispacth({ type: UPDATE, payload: resp }));
   };
 }

@@ -26,9 +26,9 @@ class AboutService {
       });
   }
 
-  async updateAbout(id, hour) {
+  async updateAbout(id, about) {
     const url = `${this.baseUrl}/${id}`;
-    return await axios.put(url, hour).then((resp) => resp.data);
+    return await axios.put(url, about).then((resp) => resp.data);
   }
   async deleteAbout(id) {
     const url = `${this.baseUrl}/${id}`;

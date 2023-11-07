@@ -11,10 +11,11 @@ public record BarberResponse(
 		String phoneNumber,
 		String experience,
 		String password,
+		Long imageId,
 		String imageUrl,
 		LocalDateTime date
 		) {
 public static BarberResponse fromEntity(Barber barber) {
-	return new BarberResponse(barber.getId(),barber.getUserName(),barber.getSurName(),barber.getPhoneNumber(),barber.getExpriences(),barber.getPassword(),barber.getImage().getImageUrl(),barber.getCreatedDate());
+	return new BarberResponse(barber.getId(),barber.getUserName(),barber.getSurName(),barber.getPhoneNumber(),barber.getExpriences(),barber.getPassword(),barber.getImage().getId(),barber.getImage().getImageUrl(),barber.getCreatedDate());
 }
 }

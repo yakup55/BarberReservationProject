@@ -13,31 +13,25 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { add } from "../../Redux/actions/hourActions";
 import { useFormik } from "formik";
 export default function Add4() {
   const dispacth = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
-  if (typeof originalPrompt === 'undefined') {
-    var originalPrompt = 'Bu, orijinal istemdir.';
-  }
-  
+
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  
-  const { handleSubmit, handleBlur, handleChange, errors, values, touched } =
-    useFormik({
-      initialValues: {
-        hour: "",
-      },
-      onSubmit: (values) => {
-        dispacth(add(values));
-        onClose(onClose);
-      },
-    });
+  const { handleSubmit, handleBlur, handleChange } = useFormik({
+    initialValues: {
+      hour: "",
+    },
+    onSubmit: (values) => {
+      dispacth(add(values));
+      onClose(onClose);
+    },
+  });
   return (
     <>
       <Button colorScheme="facebook" onClick={onOpen}>

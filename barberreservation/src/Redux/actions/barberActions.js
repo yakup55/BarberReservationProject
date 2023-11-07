@@ -46,10 +46,10 @@ export function barberLogin(barber) {
       .then((resp) => dispacth({ type: BARBER_LOGIN, payload: resp }));
   };
 }
-export function update(barber) {
+export function update(id, barber) {
   return function (dispacth) {
     service
-      .updateBarber(barber)
+      .updateBarber(id, barber)
       .then((resp) => dispacth({ type: UPDATE, payload: resp }));
   };
 }

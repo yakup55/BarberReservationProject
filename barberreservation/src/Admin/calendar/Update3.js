@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getByCalendarId, update } from "../../Redux/actions/calendarActions";
 import { validationSchema } from "./validationSchema";
-import { Button, Container, Input, Stack } from "@chakra-ui/react";
+import { Button, Container, FormControl, FormLabel, Input, Stack } from "@chakra-ui/react";
 
 export default function Update3() {
   const { id } = useParams();
@@ -26,7 +26,7 @@ export default function Update3() {
         dates: "",
       },
       onSubmit: (values) => {
-        dispacth(update(values, id));
+        dispacth(update(id,values));
         navigate("/admin/calendarslist");
       },
     },
@@ -44,7 +44,9 @@ export default function Update3() {
     <Container mt={100}>
       <form onSubmit={handleSubmit}>
         <Stack spacing={10}>
-          <Input
+          <FormControl>
+            <FormLabel textAlign={"center"}>Gün Giriniz</FormLabel>
+            <Input
             value={values?.dates}
             id="dates"
             name="dates"
@@ -54,8 +56,8 @@ export default function Update3() {
             helperText={errors.dates && touched.dates ? errors.dates : ""}
             placeholder="Gün Giriniz"
           />
-
-          <Button type="submit" colorScheme="blue" mr={3}>
+          </FormControl>
+          <Button type="submit" colorScheme="whatsapp" mr={3}>
             Güncelle
           </Button>
         </Stack>

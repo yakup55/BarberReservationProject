@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import spring.project.springbarberreservation.entities.Users;
 import spring.project.springbarberreservation.repositories.UserRepository;
+import spring.project.springbarberreservation.requests.UpdateUserRequest;
 import spring.project.springbarberreservation.responses.MessageResponse;
 import spring.project.springbarberreservation.responses.MessageType;
 
@@ -32,14 +33,14 @@ public MessageResponse addUser(Users user) {
 	repository.save(user);
 	return new MessageResponse("Has been created",MessageType.SUCCESS);
 }
-public MessageResponse updateUser(Long id,Users newUser) {
+public MessageResponse updateUser(Long id,UpdateUserRequest newUser) {
 	Users user=getUserById(id);
 	if(!repository.existsById(id)) {
 		return new MessageResponse("User cant be found", MessageType.ERROR);
 	}
 	user.update(newUser);
 	repository.save(user);
-	return new MessageResponse("Has been created",MessageType.SUCCESS);
+	return new MessageResponse("Has been Updated",MessageType.SUCCESS);
 }
 
 public MessageResponse deleteUser(Long id) {

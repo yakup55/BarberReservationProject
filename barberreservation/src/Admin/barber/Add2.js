@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   FormControl,
-  FormHelperText,
   FormLabel,
   HStack,
   Input,
@@ -17,11 +16,7 @@ import {
   ModalOverlay,
   Radio,
   RadioGroup,
-  Select,
   SimpleGrid,
-  Stack,
-  Wrap,
-  WrapItem,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -40,7 +35,7 @@ export default function Add2() {
   const finalRef = React.useRef(null);
   const navigate = useNavigate();
   const dispacth = useDispatch();
-  const { handleSubmit, handleBlur, handleChange, errors, touched, values } =
+  const { handleSubmit, handleBlur, handleChange, errors, touched } =
     useFormik(
       {
         initialValues: {

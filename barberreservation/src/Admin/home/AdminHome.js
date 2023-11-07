@@ -1,6 +1,5 @@
 import {
   Badge,
-  Box,
   Button,
   Card,
   CardBody,
@@ -9,8 +8,6 @@ import {
   Container,
   Heading,
   SimpleGrid,
-  Stack,
-  StackDivider,
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
@@ -24,6 +21,7 @@ import { getList6 } from "../../Redux/actions/userActions";
 import { getList3 } from "../../Redux/actions/calendarActions";
 import { getList7 } from "../../Redux/actions/contactActions";
 import { getList8 } from "../../Redux/actions/quentionsActions";
+import { getImagesList } from "../../Redux/actions/imageActions";
 export default function AdminHome() {
   const navigate = useNavigate();
   const dispacth = useDispatch();
@@ -35,6 +33,7 @@ export default function AdminHome() {
   const { calendars } = useSelector((state) => state.calendar);
   const { contacts } = useSelector((state) => state.contact);
   const { quentions } = useSelector((state) => state.quention);
+  const { images } = useSelector((state) => state.image);
 
   useEffect(() => {
     dispacth(getList());
@@ -45,6 +44,7 @@ export default function AdminHome() {
     dispacth(getList6());
     dispacth(getList7());
     dispacth(getList8());
+    dispacth(getImagesList());
   }, [dispacth]);
   return (
     <Container mt="50" mb={20} maxW={1000}>
@@ -197,6 +197,25 @@ export default function AdminHome() {
             <Button
               colorScheme="purple"
               onClick={() => navigate("/admin/quentionslist")}
+            >
+              Detay
+            </Button>
+          </CardFooter>
+        </Card>
+        <Card bgColor="aqua">
+          <CardHeader>
+            <Heading size="md">Berber Avatarları</Heading>
+          </CardHeader>
+          <CardBody>
+            <Text>
+              Toplam Avatar sayısı{" "}
+              <Badge bgColor={"lightgreen"}>{images.length}</Badge>
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <Button
+              colorScheme="purple"
+              onClick={() => navigate("/admin/imageslist")}
             >
               Detay
             </Button>

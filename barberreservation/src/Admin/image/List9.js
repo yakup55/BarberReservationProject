@@ -5,9 +5,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
+  Avatar,
   Button,
   Container,
-  Image,
   Table,
   TableCaption,
   TableContainer,
@@ -21,49 +21,63 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleted, getList2 } from "../../Redux/actions/barberActions";
+import {} from "../../Redux/actions/barberActions";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import Add2 from "./Add2";
+import { deleted, getImagesList } from "../../Redux/actions/imageActions";
+import Add9 from "./Add9";
+import { openSnacbar } from "../../Redux/actions/appActions";
 
-export default function List2() {
+export default function List9() {
   const navigate = useNavigate();
   const dispacth = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
-  const { barbers } = useSelector((state) => state.barber);
+  const { images } = useSelector((state) => state.image);
   useEffect(() => {
-    dispacth(getList2());
+    dispacth(getImagesList());
   }, [dispacth]);
   const handleDeleted = (id) => {
     dispacth(deleted(id));
+    dispacth(
+      openSnacbar({
+        message: "Başarılı Bir Şekilde Silindi",
+        severity: "success",
+      })
+    );
   };
   return (
     <Container mt="10" maxW={1400}>
       <TableContainer>
         <Table variant="simple">
           <TableCaption>
-            <Add2>EKLE</Add2>
+            <Add9>EKLE</Add9>
           </TableCaption>
           <Thead>
             <Tr>
               <Th>#</Th>
-              <Th>BERBER İSMİ</Th>
-              <Th>BERBER SOY İSMİ</Th>
-              <Th>TELEFON NumaraSI</Th>
-              <Th>KAÇ YIL DENEYİMLİ</Th>
+              <Th>RESİM URLSİ</Th>
               <Th>KAYIT TARİHİ</Th>
+              <Th>GÜNCELLE</Th>
               <Th>SİL</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {barbers.map((barber) => (
+            {images.map((image) => (
               <Tr>
-                <Td>{barber.id}</Td>
-                <Td>{barber.userName}</Td>
-                <Td>{barber.surName}</Td>
-                <Td>{barber.phoneNumber}</Td>
-                <Td>{barber.experience}</Td>
-                <Td>{barber.date}</Td>
+                <Td>{image.id}</Td>
+                <Td>
+                  <Avatar w={100} h={100} src={`${image.imageUrl}`}></Avatar>
+                </Td>
+                <Td>{image.date}</Td>
+                <Td>
+                  <Button
+                    leftIcon={<EditIcon></EditIcon>}
+                    colorScheme="whatsapp"
+                    onClick={() => navigate(`/admin/imageupdate/${image.id}`)}
+                  >
+                    GÜNCELLE
+                  </Button>
+                </Td>
                 <Td>
                   <Button
                     leftIcon={<DeleteIcon></DeleteIcon>}
@@ -94,9 +108,7 @@ export default function List2() {
                           </Button>
                           <Button
                             colorScheme="red"
-                            onClick={
-                              onClose && (() => handleDeleted(barber.id))
-                            }
+                            onClick={onClose && (() => handleDeleted(image.id))}
                             ml={3}
                           >
                             SİL

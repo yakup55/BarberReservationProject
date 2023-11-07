@@ -40,7 +40,7 @@ public MessageResponse addUser(@RequestBody @Valid AddUserRequest addUserRequest
 
 @PutMapping("/{id}")
 public MessageResponse updateUser(@PathVariable Long id,@RequestBody @Valid UpdateUserRequest updateUserRequest) {
-	return service.updateUser(id, updateUserRequest.toEntity());
+	return service.updateUser(id, updateUserRequest);
 }
 @DeleteMapping("/{id}")
 public MessageResponse deleteUser(@PathVariable Long id) {

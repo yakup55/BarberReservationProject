@@ -29,10 +29,10 @@ export function add(calendar) {
       .then((resp) => dispacth({ type: ADD, payload: resp }));
   };
 }
-export function update(calendar) {
+export function update(id, calendar) {
   return function (dispacth) {
     service
-      .updateCalendar(calendar)
+      .updateCalendar(id, calendar)
       .then((resp) => dispacth({ type: UPDATE, payload: resp }));
   };
 }

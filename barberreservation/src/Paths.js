@@ -4,7 +4,6 @@ import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import List from "./Admin/about/List";
 import Update from "./Admin/about/Update";
-import Update2 from "./Admin/barber/Update2";
 import Update3 from "./Admin/calendar/Update3";
 import Update4 from "./Admin/hour/Update4";
 import Update8 from "./Admin/quention/Update8";
@@ -19,9 +18,12 @@ import AdminHome from "./Admin/home/AdminHome";
 import User from "./Components/user/User";
 import AdminProfile from "./Admin/home/AdminProfile";
 import Page404 from "./Components/error/Page404";
+import List9 from "./Admin/image/List9";
+import Update9 from "./Admin/image/Update9";
+import AdminUpdate from "./Admin/home/AdminUpdate";
+import UserUpdate from "./Components/user/UserUpdate";
 
 export default function Paths() {
-
   return (
     <Routes>
       <Route path="/" element={<Home></Home>}></Route>
@@ -33,7 +35,13 @@ export default function Paths() {
         <Route path="*" element={<Page404></Page404>}></Route>
       )}
       {localStorage.isLogin !== undefined && (
-        <Route path="/user" element={<User></User>}></Route>
+        <>
+          <Route path="/user" element={<User></User>}></Route>
+          <Route
+            path="/userupdate/:id"
+            element={<UserUpdate></UserUpdate>}
+          ></Route>
+        </>
       )}
       {localStorage.isBarberLogin !== undefined && (
         <>
@@ -42,6 +50,10 @@ export default function Paths() {
           <Route
             path="/adminprofile"
             element={<AdminProfile></AdminProfile>}
+          ></Route>
+          <Route
+            path="/adminupdate/:id"
+            element={<AdminUpdate></AdminUpdate>}
           ></Route>
           {/*ADMİN ABOUT*/}
           <Route path="/admin/aboutslist" element={<List></List>}></Route>
@@ -65,10 +77,7 @@ export default function Paths() {
           <Route path="/admin/userslist" element={<List6></List6>}></Route>
           {/*ADMİN BARBER*/}
           <Route path="/admin/barberslist" element={<List2></List2>}></Route>
-          <Route
-            path="/admin/barberupdate/:id"
-            element={<Update2></Update2>}
-          ></Route>
+
           {/*ADMİN CALENDAR*/}
           <Route path="/admin/calendarslist" element={<List3></List3>}></Route>
           <Route
@@ -84,9 +93,15 @@ export default function Paths() {
             path="/admin/quentionupdate/:id"
             element={<Update8></Update8>}
           ></Route>
+
+          {/*ADMİN İMAGE*/}
+          <Route path="/admin/imageslist" element={<List9></List9>}></Route>
+          <Route
+            path="/admin/imageupdate/:id"
+            element={<Update9></Update9>}
+          ></Route>
         </>
       )}
-    
     </Routes>
   );
 }

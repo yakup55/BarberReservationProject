@@ -1,7 +1,6 @@
 package spring.project.springbarberreservation.requests;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

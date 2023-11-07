@@ -21,7 +21,7 @@ class AuthService {
     return await axios
       .post(url, login)
       .then((resp) => {
-        return {status: resp.status, data: resp.data };
+        return { status: resp.status, data: resp.data };
       })
       .catch((err) => {
         return { status: err.response.status };
