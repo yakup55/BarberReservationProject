@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   IconButton,
+  Image,
   Menu,
   MenuButton,
   MenuDivider,
@@ -22,6 +23,7 @@ import Login from "../Login/Login";
 import UpdatePassword from "../user/UpdatePassword";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import HomeIcon from "@mui/icons-material/Home";
+import AdminUpdatePassword from "../../Admin/home/AdminUpdatePassword";
 function Navbar() {
   const navigate = useNavigate();
   const { toggleColorMode, colorMode } = useColorMode();
@@ -48,14 +50,12 @@ function Navbar() {
     localStorage.removeItem("userName");
     navigate("/");
   };
-  console.log(localStorage);
+
   return (
     <div>
-      <Flex bg="" mt={2} minWidth="max-content" alignItems="center" gap="2">
+      <Flex bg="" minWidth="max-content" alignItems="center" gap="2">
         <Box p="2">
-          <Heading onClick={() => navigate("/")} colorScheme="cyan" size="lg">
-            Berber Mahir
-          </Heading>
+          <Heading onClick={() => navigate("/")}>𝕭𝖆𝖗𝖇𝖊𝖗 𝕾𝖍𝖔𝖕</Heading>
         </Box>
         <Spacer />
         {localStorage.isLogin === undefined &&
@@ -157,6 +157,9 @@ function Navbar() {
                     onClick={() => navigate("/admin")}
                   >
                     Ana Sayfa
+                  </MenuItem>
+                  <MenuItem>
+                    <AdminUpdatePassword></AdminUpdatePassword>
                   </MenuItem>
                   <MenuItem
                     ml={1}

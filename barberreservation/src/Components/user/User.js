@@ -47,6 +47,7 @@ export default function User() {
   useEffect(() => {
     dispacth(getUserId(localStorage.userId));
   }, [dispacth]);
+ 
   return (
     <Grid
       h="300px"

@@ -1,14 +1,15 @@
 package spring.project.springbarberreservation.controllers;
 
-import java.util.List;
 
+import java.util.List;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,16 +18,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import jakarta.validation.Valid;
-
 import spring.project.springbarberreservation.entities.Barber;
 import spring.project.springbarberreservation.entities.Image;
-import spring.project.springbarberreservation.entities.RefreshToken;
+import spring.project.springbarberreservation.entities.RefreshBarberToken;
 import spring.project.springbarberreservation.requests.AddBarberRequest;
-
 import spring.project.springbarberreservation.requests.AdminRequest;
 import spring.project.springbarberreservation.requests.RefreshRequest;
+import spring.project.springbarberreservation.requests.UpdateBarberPassword;
 import spring.project.springbarberreservation.requests.UpdateBarberRequest;
 import spring.project.springbarberreservation.responses.AdminResponse;
 import spring.project.springbarberreservation.responses.BarberResponse;
@@ -37,17 +36,18 @@ import spring.project.springbarberreservation.services.ImageService;
 import spring.project.springbarberreservation.services.RefreshTokenService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/barbers")
 public class BarberController {
 	private AuthenticationManager authenticationManager;
-	private PasswordEncoder passwordEncoder;
+	
 	private final BarberService service;
-	private RefreshTokenService refreshTokenService;
+	private PasswordEncoder passwordEncoder;
+	private  RefreshTokenService refreshTokenService;
 	private JwtTokenProvider jwtTokenProvider;
-    private final ImageService imageService;
+    private  ImageService imageService;
 	
-	
-	public BarberController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
+    public BarberController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
 			BarberService service, RefreshTokenService refreshTokenService, JwtTokenProvider jwtTokenProvider,
 			ImageService imageService) {
 		super();
@@ -58,6 +58,7 @@ public class BarberController {
 		this.jwtTokenProvider = jwtTokenProvider;
 		this.imageService = imageService;
 	}
+
 	@GetMapping("/{id}")
 	public BarberResponse getBarberById(@PathVariable Long id) {
 		return BarberResponse.fromEntity(service.getBarberById(id));
@@ -66,7 +67,11 @@ public class BarberController {
 	public List<BarberResponse> getAllBarbers() {
 		return service.getAllBarber().stream().map(BarberResponse::fromEntity).toList();
 }
-
+	@PutMapping("/updatebarberpassword")
+	public ResponseEntity<MessageResponse> updateBarberPassword(@RequestBody @Valid UpdateBarberPassword updateBarberPassword) {
+		return service.updateBarberPassword(updateBarberPassword);
+	}
+	
 	@PutMapping("/{id}")
 	public MessageResponse updateBarber(@PathVariable Long id,@RequestBody @Valid UpdateBarberRequest updateBarberRequest) {
 		return service.updateBarber(id, updateBarberRequest);
@@ -77,11 +82,16 @@ public class BarberController {
 				}
 	@PostMapping("/login")
 	public AdminResponse login(@RequestBody @Valid AdminRequest loginRequest ) {
+		
 		UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
+		System.out.println(authenticationToken);
 		Authentication authentication=authenticationManager.authenticate(authenticationToken);
+		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwtToken = jwtTokenProvider.generateJwtToken(authentication);
+		
+		String jwtToken = jwtTokenProvider.generateJwtBarberToken(authentication);
 		Barber barber = service.getOneUserByBarberName(loginRequest.getUserName());
+
 		AdminResponse admin = new AdminResponse();
 		admin.setAccessToken("Bearer " + jwtToken);
 		admin.setRefreshToken(refreshTokenService.createRefreshTokenBarber(barber));
@@ -94,7 +104,6 @@ public class BarberController {
 		admin.setImageId(barber.getImage().getId());
 		return admin;
 	}
-
 	
 	
 	@PostMapping("/register")
@@ -132,9 +141,9 @@ public class BarberController {
 	@PostMapping("/refresh")
 	public ResponseEntity<AdminResponse> refresh(@RequestBody @Valid RefreshRequest refreshRequest) {
 		AdminResponse response = new AdminResponse();
-		RefreshToken token = refreshTokenService.getByBarber(refreshRequest.getBarberId());
+		RefreshBarberToken token = refreshTokenService.getByBarber(refreshRequest.getBarberId());
 		if(token.getToken().equals(refreshRequest.getRefreshToken()) &&
-				!refreshTokenService.isRefreshExpired(token)) {
+				!refreshTokenService.isRefreshBarberExpired(token)) {
 
 			Barber barber = token.getBarber();
 			String jwtToken = jwtTokenProvider.generateJwtTokenByUserId(barber.getId());

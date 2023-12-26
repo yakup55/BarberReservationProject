@@ -17,17 +17,17 @@ import spring.project.springbarberreservation.entities.Users;
 @Setter
 public class JwtUserDetails implements UserDetails{
 	public Long id;
-	private String name;
+	private String username;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	
-	public JwtUserDetails(Long id, String name, String password, Collection<? extends GrantedAuthority> authorities) {
-		this.id = id;
-		this.name = name;
-		this.password = password;
-		this.authorities = authorities;
-	}
+	   private JwtUserDetails(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+	        this.id = id;
+	        this.username = username;
+	        this.password = password;
+	        this.authorities = authorities;
+	    }
 	
 	public static JwtUserDetails create(Users user) {
         List<GrantedAuthority> authoritiesList = new ArrayList<>();
@@ -58,13 +58,6 @@ public class JwtUserDetails implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	
 

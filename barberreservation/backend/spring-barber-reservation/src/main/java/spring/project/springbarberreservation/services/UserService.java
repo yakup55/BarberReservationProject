@@ -2,21 +2,30 @@ package spring.project.springbarberreservation.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import spring.project.springbarberreservation.entities.Users;
 import spring.project.springbarberreservation.repositories.UserRepository;
+import spring.project.springbarberreservation.requests.UpdateUserPassword;
 import spring.project.springbarberreservation.requests.UpdateUserRequest;
 import spring.project.springbarberreservation.responses.MessageResponse;
 import spring.project.springbarberreservation.responses.MessageType;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
 private final UserRepository repository;
+@Autowired
+private PasswordEncoder passwordEncoder;
 
+public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+	super();
+	this.repository = repository;
+	this.passwordEncoder = passwordEncoder;
+}
 public List<Users>getAllUser(){
 	return repository.findAll();
 }
@@ -29,6 +38,28 @@ public Users getOneUserByUserName(String userName) {
 public Users getOneByPhoneNumber(String phoneNumber) {
 	return repository.findByPhoneNumber(phoneNumber);
 }
+
+
+public ResponseEntity<MessageResponse> updatePassword(UpdateUserPassword updateUserPassword) {
+	Users user = getUserById(updateUserPassword.getUserId());
+	 if (repository.existsById(user.getId())) {
+         // Eski şifreyi kontrol et
+         if (passwordEncoder.matches(updateUserPassword.getOldPassword(), user.getPassword())) {
+             // Eğer eski şifre doğru ise, yeni şifreyi güncelle
+             user.setPassword(passwordEncoder.encode(updateUserPassword.getNewPassword()));
+             repository.save(user);
+             return ResponseEntity.ok(new MessageResponse("Şifre güncellendi", MessageType.SUCCESS));
+         } else {
+        	 // Eğer eski şifre yanlışsa 400 Bad Request ile yanıt ver
+             return ResponseEntity.badRequest().body(new MessageResponse("Eski şifreniz yanlış", MessageType.ERROR));
+         }
+     } else {
+         // Kullanıcı bulunamadı
+    	 return ResponseEntity.notFound().build();
+     }
+ 
+}
+
 public MessageResponse addUser(Users user) {
 	repository.save(user);
 	return new MessageResponse("Has been created",MessageType.SUCCESS);

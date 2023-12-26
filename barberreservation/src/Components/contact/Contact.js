@@ -1,11 +1,20 @@
 import { useFormik } from "formik";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { validationSchema } from "./validationSchema";
 import { add } from "../../Redux/actions/contactActions";
-import { Button, Container, Heading, Input, Stack } from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  Heading,
+  Input,
+  Stack,
+  useToast,
+} from "@chakra-ui/react";
 
 export default function Contact() {
+  const toast = useToast();
+  const { snacbar } = useSelector((state) => state.app);
   const dispacth = useDispatch();
   const { handleSubmit, handleChange, handleBlur, errors, touched } = useFormik(
     {
@@ -25,7 +34,7 @@ export default function Contact() {
       <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Heading textAlign={"center"} fontSize={"2xl"} fontStyle={"italic"}>
-            İletişim Yap
+            Geri Bildirim Yap
           </Heading>
           <Input
             aria-errormessage={errors.name && touched.name}
@@ -65,10 +74,18 @@ export default function Contact() {
             placeholder="Açıklama  Giriniz"
           />
           <Button
-            width={100}
-            alignItems="center"
-            colorScheme="whatsapp"
             type="submit"
+            colorScheme="whatsapp"
+            onClick={() =>
+              toast({
+                title: `${snacbar.severity}`,
+                description: `${snacbar.message}`,
+                status: `${snacbar.severity}`,
+                duration: 4000,
+                isClosable: true,
+              })
+            }
+            mr={3}
           >
             Gönder
           </Button>

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import jakarta.validation.Valid;
 import spring.project.springbarberreservation.entities.RefreshToken;
 import spring.project.springbarberreservation.entities.Users;
@@ -31,7 +30,6 @@ private AuthenticationManager authenticationManager;
 	private JwtTokenProvider jwtTokenProvider;
 	
 	private final UserService userService;
-	
 	
 	private PasswordEncoder passwordEncoder;
 
@@ -53,6 +51,7 @@ private AuthenticationManager authenticationManager;
 	public AuthResponse login(@RequestBody @Valid LoginRequest loginRequest ) {
 		UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
 		Authentication authentication=authenticationManager.authenticate(authenticationToken);
+		System.out.println(authenticationToken);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwtToken = jwtTokenProvider.generateJwtToken(authentication);
 		Users user = userService.getOneUserByUserName(loginRequest.getUserName());
@@ -67,7 +66,7 @@ private AuthenticationManager authenticationManager;
 		return authResponse;
 	}
 	
-	
+
 	@PostMapping("/register")
 	public ResponseEntity<AuthResponse>  register(@RequestBody @Valid AddUserRequest addUserRequest) {
 		AuthResponse authResponse = new AuthResponse();
@@ -79,7 +78,6 @@ private AuthenticationManager authenticationManager;
 			authResponse.setMessage("PhoneNumber already in use.");
 			return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
 		}
-		
 		Users user = new Users();
 		user.setUserName(addUserRequest.getUserName());
 		user.setSurName(addUserRequest.getSurName());

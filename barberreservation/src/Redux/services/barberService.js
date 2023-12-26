@@ -48,6 +48,18 @@ class BarberService {
       });
   }
 
+  async updateBarberPassword(barber) {
+    const url = `${this.baseUrl}/updatebarberpassword`;
+    return await axios
+      .put(url, barber)
+      .then((resp) => {
+        return { status: resp.status, data: resp.data };
+      })
+      .catch((err) => {
+        return { status: err.response.status };
+      });
+  }
+
   async updateBarber(id, barber) {
     const url = `${this.baseUrl}/${id}`;
     return await axios.put(url, barber).then((resp) => resp.data);

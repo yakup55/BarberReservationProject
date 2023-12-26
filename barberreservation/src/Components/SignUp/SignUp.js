@@ -66,7 +66,7 @@ export default function SignUp() {
       } else if (result.status === 201) {
         dispacth(
           openSnacbar({
-            message: `Kaydınız Alınmıştır Lütfen Mail Doğrulaması İçin Maillerinizi Kontrol Ediniz`,
+            message: `Kayıt başarılı giriş yapabilirsiniz`,
             severity: "success",
           })
         );
@@ -100,7 +100,6 @@ export default function SignUp() {
               <FormControl>
                 <FormLabel>Adınız</FormLabel>
                 <Input
-                  type="text"
                   id="userName"
                   name="userName"
                   onChange={handleChange}
@@ -112,7 +111,6 @@ export default function SignUp() {
               <FormControl mt={4}>
                 <FormLabel>Soy Adınız</FormLabel>
                 <Input
-                  type="text"
                   id="surName"
                   name="surName"
                   onChange={handleChange}
@@ -125,7 +123,6 @@ export default function SignUp() {
                 <InputGroup>
                   <InputLeftAddon children="+90" />
                   <Input
-                    type="number"
                     id="phoneNumber"
                     name="phoneNumber"
                     onChange={handleChange}
@@ -137,7 +134,6 @@ export default function SignUp() {
               <FormControl mt={4}>
                 <FormLabel>Şifre Giriniz</FormLabel>
                 <Input
-                  type="password"
                   id="password"
                   name="password"
                   onChange={handleChange}
@@ -156,7 +152,7 @@ export default function SignUp() {
                     title: `${snacbar.severity}`,
                     description: `${snacbar.message}`,
                     status: `${snacbar.severity}`,
-                    duration: 5000,
+                    duration: 4000,
                     isClosable: true,
                   })
                 }

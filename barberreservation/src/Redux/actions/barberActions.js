@@ -7,6 +7,7 @@ export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
 export const BARBER_REGISTER = "BARBER_REGISTER";
 export const BARBER_LOGIN = "BARBER_LOGIN";
+export const UPDATE_BARBER_PASSWORD = "UPDATE_BARBER_PASSWORD";
 const service = new BarberService();
 
 export function getList2() {
@@ -44,6 +45,15 @@ export function barberLogin(barber) {
     service
       .barberLogin(barber)
       .then((resp) => dispacth({ type: BARBER_LOGIN, payload: resp }));
+  };
+}
+export function updateBarberPassword(barber) {
+  return function (dispacth) {
+    service
+      .updateBarberPassword(barber)
+      .then((resp) =>
+        dispacth({ type: UPDATE_BARBER_PASSWORD, payload: resp })
+      );
   };
 }
 export function update(id, barber) {

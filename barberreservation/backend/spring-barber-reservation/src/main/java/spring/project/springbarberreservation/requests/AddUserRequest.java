@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import spring.project.springbarberreservation.entities.Users;
 
+
 @Getter
 public class AddUserRequest
 		
@@ -22,8 +23,9 @@ public class AddUserRequest
 	@NotEmpty
 	@Size(min=3,max=11)
 	String password;
+	
 	public Users toEntity() {
-		return new Users(userName,surName,phoneNumber,password,null);
+		return new Users(userName, surName, phoneNumber, password, null);
 	}
 
 }

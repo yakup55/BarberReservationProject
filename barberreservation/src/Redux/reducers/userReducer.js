@@ -5,6 +5,7 @@ import {
   UPDATE,
   GET_LIST_USER,
   GET_BY_USER_ID,
+  UPDATE_USER_PASSWORD,
 } from "../actions/userActions";
 
 const initialvales = {
@@ -32,6 +33,11 @@ export default function userReducer(state = initialvales, { type, payload }) {
       return {
         ...state,
         users: [...state.users.filter((x) => x.id !== payload.id), payload],
+      };
+    case UPDATE_USER_PASSWORD:
+      return {
+        ...state,
+        users: [...state.users, payload],
       };
     case DELETE:
       return {

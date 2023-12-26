@@ -25,10 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
-	
-	
 
-	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
@@ -47,7 +44,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		}
 		filterChain.doFilter(request, response);
 	}
-
 	protected void doFilterBarberInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
@@ -66,7 +62,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		}
 		filterChain.doFilter(request, response);
 	}
-	
 	private String extractJwtFromRequest(HttpServletRequest request) {
 		String bearer = request.getHeader("Authorization");
 		if(StringUtils.hasText(bearer) && bearer.startsWith("Bearer "))

@@ -5,6 +5,7 @@ export const GET_BY_USER_ID = "GET_BY_USER_ID";
 export const ADD = "ADD";
 export const DELETE = "DELETE";
 export const UPDATE = "UPDATE";
+export const UPDATE_USER_PASSWORD = "UPDATE_USER_PASSWORD";
 const service = new UserService();
 
 export function getList6() {
@@ -34,6 +35,13 @@ export function update(id, user) {
     service
       .updateUser(id, user)
       .then((resp) => dispacth({ type: UPDATE, payload: resp }));
+  };
+}
+export function updateUserPassword(user) {
+  return function (dispacth) {
+    service
+      .updateUserPassword(user)
+      .then((resp) => dispacth({ type: UPDATE_USER_PASSWORD, payload: resp }));
   };
 }
 export function userDeleted(id) {

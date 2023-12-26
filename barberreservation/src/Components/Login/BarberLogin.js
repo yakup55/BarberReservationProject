@@ -56,7 +56,7 @@ export default function BarberLogin() {
           localStorage.setItem("expriences", resp.expriences);
           localStorage.setItem("message", resp.message);
           localStorage.setItem("accessToken", resp.accessToken);
-          localStorage.setItem("refreshToken", resp.refreshToken);
+         // localStorage.setItem("refreshToken", resp.refreshToken);
           localStorage.setItem("isBarberLogin", true);
 
           dispacth(
@@ -82,10 +82,9 @@ export default function BarberLogin() {
     },
     validationSchema
   );
-  console.log(localStorage);
   return (
     <>
-      <Button colorScheme="teal" onClick={onOpen}>
+      <Button colorScheme="teal"  onClick={onOpen}>
         Berber Girişi
       </Button>
 
@@ -98,7 +97,7 @@ export default function BarberLogin() {
         <ModalOverlay />
         <form onSubmit={handleSubmit}>
           <ModalContent>
-            <ModalHeader>Berber Giriş Yap </ModalHeader>
+            <ModalHeader onClick={onClose}>Berber Giriş Yap </ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl mt={4}>

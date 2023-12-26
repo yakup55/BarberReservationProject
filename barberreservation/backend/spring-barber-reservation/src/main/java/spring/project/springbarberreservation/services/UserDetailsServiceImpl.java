@@ -12,18 +12,16 @@ import spring.project.springbarberreservation.repositories.UserRepository;
 import spring.project.springbarberreservation.security.JwtUserDetails;
 
 @Service
-
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 private UserRepository userRepository;
-	private BarberRepository barberRepository;
+	private  BarberRepository barberRepository;
     
 	public UserDetailsServiceImpl(UserRepository userRepository,BarberRepository barberRepository) {
 	super();
 	this.userRepository = userRepository;
 	this.barberRepository=barberRepository;
 }
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Users users = userRepository.findByUserName(username);

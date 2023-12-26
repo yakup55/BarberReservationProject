@@ -1,14 +1,9 @@
 package spring.project.springbarberreservation.entities;
 
 import java.util.List;
-
-import org.hibernate.SessionFactory;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -24,9 +19,6 @@ import spring.project.springbarberreservation.requests.UpdateBarberRequest;
 @Getter
 @Setter
 public class Barber extends BaseEntity {
-	
-	@Autowired
-	private SessionFactory sessionFactory;
 private String userName;
 private String surName;
 private String phoneNumber;
@@ -44,8 +36,6 @@ private Image image;
 
 private List<Reservation>reservations;
 
-
-
 public void update(UpdateBarberRequest newBarber) {
 	this.surName=newBarber.getSurName();
 	this.expriences=newBarber.getExperience();
@@ -62,9 +52,4 @@ public Barber(String name, String surName, String phoneNumber, String expriences
 	this.image=image;
 	this.password=password;
 }
-
-
-
-
-
 }

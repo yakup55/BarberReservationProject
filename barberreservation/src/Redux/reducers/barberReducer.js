@@ -7,6 +7,7 @@ import {
   GET_BY_BARBER_ID,
   BARBER_REGISTER,
   BARBER_LOGIN,
+  UPDATE_BARBER_PASSWORD,
 } from "../actions/barberActions";
 
 const initialvales = {
@@ -44,6 +45,11 @@ export default function barberReducer(state = initialvales, { type, payload }) {
       return {
         ...state,
         barbers: [...state.barbers.filter((x) => x.id !== payload.id), payload],
+      };
+    case UPDATE_BARBER_PASSWORD:
+      return {
+        ...state,
+        barbers: [...state.barbers, payload],
       };
     case DELETE:
       return {

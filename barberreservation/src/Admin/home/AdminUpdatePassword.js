@@ -19,38 +19,38 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PinIcon from "@mui/icons-material/Pin";
-import UserService from "../../Redux/services/userService";
 import { openSnacbar } from "../../Redux/actions/appActions";
+import BarberService from "../../Redux/services/barberService";
 
-export default function UpdatePassword() {
+export default function AdminUpdatePassword() {
   const toast = useToast();
   const { snacbar } = useSelector((state) => state.app);
-  const service = new UserService();
+  const service = new BarberService();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const navigate = useNavigate();
   const dispacth = useDispatch();
 
-  const handleLogout = () => {
+  const handleBarberLogout = () => {
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("isLogin");
+    localStorage.removeItem("isBarberLogin");
     localStorage.removeItem("message");
     localStorage.removeItem("phoneNumber");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("surName");
-    localStorage.removeItem("userId");
+    localStorage.removeItem("barberId");
     localStorage.removeItem("userName");
     navigate("/");
   };
   const { handleSubmit, handleBlur, handleChange } = useFormik({
     initialValues: {
-      userId: localStorage.userId,
+      barberId: localStorage.barberId,
       oldPassword: "",
       newPassword: "",
     },
     onSubmit: async (values) => {
-      const result = await service.updateUserPassword(values);
+      const result = await service.updateBarberPassword(values);
       if (result.status === 400) {
         dispacth(
           openSnacbar({
@@ -65,7 +65,7 @@ export default function UpdatePassword() {
             severity: "success",
           })
         );
-        handleLogout();
+        handleBarberLogout();
         onClose(onClose);
       }
     },
