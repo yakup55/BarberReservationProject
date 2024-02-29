@@ -1,5 +1,4 @@
 import {
-  AspectRatio,
   Card,
   CardBody,
   Container,

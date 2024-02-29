@@ -1,6 +1,5 @@
 import { TriangleUpIcon } from "@chakra-ui/icons";
-import { Button, IconButton } from "@chakra-ui/react";
-import { yellow } from "@mui/material/colors";
+import { IconButton } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 export default function ScrollToTop() {
@@ -30,25 +29,23 @@ export default function ScrollToTop() {
   return (
     <>
       <IconButton
-      width={50}
-      height={50}
-       isRound={true}
-       variant='solid'
-       colorScheme='teal'
-       aria-label='Done'
-       fontSize='20px'
+        width={50}
+        height={50}
+        isRound={true}
+        variant="solid"
+        colorScheme="teal"
+        aria-label="Done"
+        fontSize="20px"
         onClick={handleClick}
         style={{
-            backgroundColor:"darkorange",
+          backgroundColor: "darkorange",
           visibility: isVisible ? "visible" : "hidden",
           position: "fixed",
           bottom: "100px",
           right: "20px",
-          
         }}
       >
-        <TriangleUpIcon 
-        
+        <TriangleUpIcon
           rounded="full"
           size="lg"
           position="absolute"

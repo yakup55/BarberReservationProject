@@ -1,7 +1,6 @@
 import {
   Accordion,
   AccordionButton,
-  AccordionIcon,
   AccordionItem,
   AccordionPanel,
   Box,
@@ -25,10 +24,10 @@ export default function Quentions() {
       <Heading mt={12} textAlign={"center"} fontSize={"2xl"} fontStyle={"italic"}>
         Sıkça Sorulan Sorular
       </Heading>
-      <Box  pt={5} position="relative" h="50vh">
-        <Accordion allowMultiple>
+      <Box   color='black' pt={5} position="relative" mb="10">
+        <Accordion  allowMultiple>
           {quentions.map((quention) => (
-      <AccordionItem>
+      <AccordionItem >
         {({ isExpanded }) => (
           <>
             <h2>

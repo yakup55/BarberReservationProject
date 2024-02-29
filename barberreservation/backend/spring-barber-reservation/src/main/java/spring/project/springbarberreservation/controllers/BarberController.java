@@ -84,7 +84,6 @@ public class BarberController {
 	public AdminResponse login(@RequestBody @Valid AdminRequest loginRequest ) {
 		
 		UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
-		System.out.println(authenticationToken);
 		Authentication authentication=authenticationManager.authenticate(authenticationToken);
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);

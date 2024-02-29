@@ -6,8 +6,6 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   Button,
-  Container,
-  Image,
   Table,
   TableCaption,
   TableContainer,
@@ -122,7 +120,7 @@ export default function List() {
                           </Button>
                           <Button
                             colorScheme="red"
-                            onClick={onClose && (()=>handleDeleted(about.id))}
+                            onClick={onClose && (() => handleDeleted(about.id))}
                             ml={3}
                           >
                             SİL
