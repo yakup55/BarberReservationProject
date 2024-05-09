@@ -50,13 +50,16 @@ public class JwtTokenProvider {
 		Date expireDate = new Date(new Date().getTime() + EXPIRES_IN2);
 		return Jwts.builder().setSubject(Long.toString(barberId))
 				.setIssuedAt(new Date()).setExpiration(expireDate)
-				.signWith(SignatureAlgorithm.HS512, APP_SECRET2).compact();}
+				.signWith(SignatureAlgorithm.HS512, APP_SECRET2).compact();
+		}
 	Long getUserIdFromJwt(String token) {
 		Claims claims = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token).getBody();
-		return Long.parseLong(claims.getSubject());}
+		return Long.parseLong(claims.getSubject());
+		}
 	Long getBarberIdFromJwt(String token) {
 		Claims claims = Jwts.parser().setSigningKey(APP_SECRET2).parseClaimsJws(token).getBody();
-		return Long.parseLong(claims.getSubject());}
+		return Long.parseLong(claims.getSubject());
+		}
 	
 	boolean validateToken(String token) {
 	    try {

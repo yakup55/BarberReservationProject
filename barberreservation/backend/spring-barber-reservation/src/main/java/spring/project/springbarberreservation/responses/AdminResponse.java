@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class AdminResponse {
 	Long barberId;
-	String accessToken;
 	String refreshToken;
 	String userName;
 	String surName;

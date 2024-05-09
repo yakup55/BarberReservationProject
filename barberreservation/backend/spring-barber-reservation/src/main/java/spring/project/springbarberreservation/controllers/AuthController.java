@@ -28,11 +28,8 @@ public class AuthController {
 private AuthenticationManager authenticationManager;
 	
 	private JwtTokenProvider jwtTokenProvider;
-	
 	private final UserService userService;
-	
 	private PasswordEncoder passwordEncoder;
-
 	private RefreshTokenService refreshTokenService;
 	
 	
@@ -51,7 +48,7 @@ private AuthenticationManager authenticationManager;
 	public AuthResponse login(@RequestBody @Valid LoginRequest loginRequest ) {
 		UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
 		Authentication authentication=authenticationManager.authenticate(authenticationToken);
-		System.out.println(authenticationToken);
+		System.out.println(authentication);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwtToken = jwtTokenProvider.generateJwtToken(authentication);
 		Users user = userService.getOneUserByUserName(loginRequest.getUserName());

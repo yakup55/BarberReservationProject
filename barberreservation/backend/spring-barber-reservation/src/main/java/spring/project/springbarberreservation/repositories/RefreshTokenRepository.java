@@ -9,8 +9,4 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
 	@Query("SELECT r FROM RefreshToken r WHERE r.users.id = :userId")
 RefreshToken findByUserId(Long userId);
 	
-	/*
-	@Query("SELECT r FROM RefreshToken r WHERE r.barber.id = :barberId")
-RefreshToken findByBarberId(Long barberId);
-*/
 }

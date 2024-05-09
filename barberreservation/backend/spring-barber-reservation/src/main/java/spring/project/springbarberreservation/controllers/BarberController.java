@@ -1,15 +1,8 @@
 package spring.project.springbarberreservation.controllers;
-
-
 import java.util.List;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,41 +14,33 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import spring.project.springbarberreservation.entities.Barber;
 import spring.project.springbarberreservation.entities.Image;
-import spring.project.springbarberreservation.entities.RefreshBarberToken;
 import spring.project.springbarberreservation.requests.AddBarberRequest;
 import spring.project.springbarberreservation.requests.AdminRequest;
-import spring.project.springbarberreservation.requests.RefreshRequest;
 import spring.project.springbarberreservation.requests.UpdateBarberPassword;
 import spring.project.springbarberreservation.requests.UpdateBarberRequest;
 import spring.project.springbarberreservation.responses.AdminResponse;
 import spring.project.springbarberreservation.responses.BarberResponse;
 import spring.project.springbarberreservation.responses.MessageResponse;
-import spring.project.springbarberreservation.security.JwtTokenProvider;
 import spring.project.springbarberreservation.services.BarberService;
 import spring.project.springbarberreservation.services.ImageService;
-import spring.project.springbarberreservation.services.RefreshTokenService;
+import spring.project.springbarberreservation.services.RefreshBarberTokenService;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/barbers")
 public class BarberController {
-	private AuthenticationManager authenticationManager;
-	
 	private final BarberService service;
 	private PasswordEncoder passwordEncoder;
-	private  RefreshTokenService refreshTokenService;
-	private JwtTokenProvider jwtTokenProvider;
+	private  RefreshBarberTokenService barberTokenService;
     private  ImageService imageService;
 	
-    public BarberController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-			BarberService service, RefreshTokenService refreshTokenService, JwtTokenProvider jwtTokenProvider,
+    public BarberController(PasswordEncoder passwordEncoder,
+			BarberService service, RefreshBarberTokenService barberTokenService,
 			ImageService imageService) {
 		super();
-		this.authenticationManager = authenticationManager;
+	
 		this.passwordEncoder = passwordEncoder;
 		this.service = service;
-		this.refreshTokenService = refreshTokenService;
-		this.jwtTokenProvider = jwtTokenProvider;
+		this.barberTokenService = barberTokenService;
 		this.imageService = imageService;
 	}
 
@@ -83,17 +68,9 @@ public class BarberController {
 	@PostMapping("/login")
 	public AdminResponse login(@RequestBody @Valid AdminRequest loginRequest ) {
 		
-		UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
-		Authentication authentication=authenticationManager.authenticate(authenticationToken);
-		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
-		String jwtToken = jwtTokenProvider.generateJwtBarberToken(authentication);
 		Barber barber = service.getOneUserByBarberName(loginRequest.getUserName());
-
 		AdminResponse admin = new AdminResponse();
-		admin.setAccessToken("Bearer " + jwtToken);
-		admin.setRefreshToken(refreshTokenService.createRefreshTokenBarber(barber));
+		admin.setRefreshToken(barberTokenService.createRefreshTokenBarber(barber));
 		admin.setBarberId(barber.getId());
 		admin.setMessage("Login successful");
 		admin.setUserName(barber.getUserName());
@@ -103,7 +80,6 @@ public class BarberController {
 		admin.setImageId(barber.getImage().getId());
 		return admin;
 	}
-	
 	
 	@PostMapping("/register")
 	public ResponseEntity<AdminResponse>  register(@RequestBody @Valid AddBarberRequest addBarber) {
@@ -125,37 +101,9 @@ public class BarberController {
 		barber.setImage(image);
 		barber.setPassword(passwordEncoder.encode(addBarber.getPassword()));
 		service.addBarber(barber);
-		
-		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(addBarber.getUserName(), addBarber.getPassword());
-		Authentication auth = authenticationManager.authenticate(authToken);
-		SecurityContextHolder.getContext().setAuthentication(auth);
-		String jwtToken = jwtTokenProvider.generateJwtBarberToken(auth);
-		
 		admin.setMessage("Barber successfully registered.");
-		admin.setAccessToken("Bearer " + jwtToken);
-		admin.setRefreshToken(refreshTokenService.createRefreshTokenBarber(barber));
+		admin.setRefreshToken(barberTokenService.createRefreshTokenBarber(barber));
 		admin.setBarberId(barber.getId());
 		return new ResponseEntity<>(admin, HttpStatus.CREATED);	
-	}
-	@PostMapping("/refresh")
-	public ResponseEntity<AdminResponse> refresh(@RequestBody @Valid RefreshRequest refreshRequest) {
-		AdminResponse response = new AdminResponse();
-		RefreshBarberToken token = refreshTokenService.getByBarber(refreshRequest.getBarberId());
-		if(token.getToken().equals(refreshRequest.getRefreshToken()) &&
-				!refreshTokenService.isRefreshBarberExpired(token)) {
-
-			Barber barber = token.getBarber();
-			String jwtToken = jwtTokenProvider.generateJwtTokenByUserId(barber.getId());
-			response.setMessage("token successfully refreshed.");
-			response.setAccessToken("Bearer " + jwtToken);
-			response.setBarberId(barber.getId());
-			return new ResponseEntity<>(response, HttpStatus.OK);		
-		} else {
-			response.setMessage("refresh token is not valid.");
-			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-		}
-		
-	}
-	
-	
+	}	
 }

@@ -46,6 +46,7 @@ export default function AdminHome() {
     dispacth(getList8());
     dispacth(getImagesList());
   }, [dispacth]);
+  
   return (
     <Container mt="50" mb={20} maxW={1000}>
       <SimpleGrid columns={3} spacing={10}>

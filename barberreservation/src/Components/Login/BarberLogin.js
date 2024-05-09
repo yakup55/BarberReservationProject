@@ -47,7 +47,7 @@ export default function BarberLogin() {
           );
 
           const resp = result.data;
-
+          console.log(values)
           localStorage.setItem("barberId", resp.barberId);
           localStorage.setItem("userName", resp.userName);
           localStorage.setItem("surName", resp.surName);
@@ -55,7 +55,7 @@ export default function BarberLogin() {
           localStorage.setItem("image", resp.image);
           localStorage.setItem("expriences", resp.expriences);
           localStorage.setItem("message", resp.message);
-          localStorage.setItem("accessToken", resp.accessToken);
+          //localStorage.setItem("accessToken", resp.accessToken);
          // localStorage.setItem("refreshToken", resp.refreshToken);
           localStorage.setItem("isBarberLogin", true);
 
@@ -82,6 +82,7 @@ export default function BarberLogin() {
     },
     validationSchema
   );
+ 
   return (
     <>
       <Button colorScheme="teal"  onClick={onOpen}>

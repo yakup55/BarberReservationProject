@@ -21,11 +21,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
 	@Autowired
 	JwtTokenProvider jwtTokenProvider;
-	
-
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
-
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
@@ -44,24 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		}
 		filterChain.doFilter(request, response);
 	}
-	protected void doFilterBarberInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
-		try {
-			String jwtToken = extractJwtFromRequest(request);
-			if(StringUtils.hasText(jwtToken) && jwtTokenProvider.validateBarberToken(jwtToken)) {
-				Long id = jwtTokenProvider.getBarberIdFromJwt(jwtToken);
-				UserDetails user = userDetailsService.loadBarberById(id);
-				if(user != null) {
-					UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-					auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-					SecurityContextHolder.getContext().setAuthentication(auth);
-				}
-			}
-		} catch(Exception e) {
-			return;
-		}
-		filterChain.doFilter(request, response);
-	}
+	
 	private String extractJwtFromRequest(HttpServletRequest request) {
 		String bearer = request.getHeader("Authorization");
 		if(StringUtils.hasText(bearer) && bearer.startsWith("Bearer "))

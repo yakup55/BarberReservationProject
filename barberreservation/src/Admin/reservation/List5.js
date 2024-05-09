@@ -31,6 +31,7 @@ export default function List5() {
   const handleDeleted = (id) => {
     dispacth(deleted(id));
   };
+  console.log(reservations);
   return (
     <Container maxW={1000}>
       <TableContainer>
@@ -38,9 +39,9 @@ export default function List5() {
           <Thead>
             <Tr>
               <Th>#</Th>
+              <Th>BERBER</Th>
+              <Th>HOUR</Th>
               <Th>DESCRIPTION</Th>
-              <Th>BERBER ID</Th>
-              <Th>HOUR ID</Th>
               <Th>CREATED DATE</Th>
               <Th>DELETE</Th>
             </Tr>
@@ -49,12 +50,14 @@ export default function List5() {
             {reservations.map((reservation) => (
               <Tr>
                 <Td>{reservation.id}</Td>
-                <Td>{reservation.barberId}</Td>
-                <Td>{reservation.hourId}</Td>
-                <Td>{reservation.description}</Td>
-                <Td>{reservation.date}</Td>
                 <Td>
-                <Button
+                  {reservation.barbarName} {reservation.barberSurName}
+                </Td>
+                <Td>{reservation.hour}</Td>
+                <Td>{reservation.description}</Td>
+                <Td>{reservation.reservationDate}</Td>
+                <Td>
+                  <Button
                     leftIcon={<DeleteIcon></DeleteIcon>}
                     colorScheme="red"
                     onClick={onOpen}
